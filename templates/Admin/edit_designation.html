@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="col-sm-9">
+   <div class="card">
+      <div class="card-body">
+        <form method="post" action="{% url 'update_designationpage' designation.id %}">
+            {% csrf_token %}
+            <div class="col-12">
+               <h3 class="form-title my-3"><span>Edit Designation</span></h3>
+            </div>
+            {% include 'includes/messages.html' %}
+            <div class="col-sm-9">
+               <div class="form-group">
+                  <label>Designation Name:</label>
+                  <input type="text" class="form-control" name="name"
+                     value="{{designation.name}}" >
+
+                   <input type="text" class="form-control" name="designation_id"
+                  value="{{designation.id}}" hidden>
+               </div>
+
+            <div class="col-12">
+               <button type="submit" class="btn btn-primary">Update Designation</button>
+            </div>
+        </form>
+      </div>
+   </div>
+</div>
+
+{% endblock %}

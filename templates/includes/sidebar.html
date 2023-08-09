@@ -1,0 +1,62 @@
+{% load static %}
+<div class="sidebar" id="sidebar">
+            <div class="sidebar-inner slimscroll">
+               <div id="sidebar-menu" class="sidebar-menu">
+                  {% if user.user_type == '1' %}
+                  <ul>
+                     <li class="menu-title">
+                        <span>Main Menu</span>
+                     </li>
+                     <li class="submenu active">
+                      <a href="#"><i class="fas fa-table"></i> <span> Dashbord</span> <span class="menu-arrow"></span></a>
+                        <ul>
+                           <li><a href="{% url 'Admin/homepage' %}" class="active">Employee Dashboard</a></li>
+                        </ul>
+                     </li>
+                     <li class="submenu">
+                        <a href="{% url 'Admin/homepage' %}"><i class="fas fa-user-graduate"></i> <span> Employee</span> <span class="menu-arrow"></span></a>
+                        <ul>
+                           <li><a href="{% url 'add_employeepage' %}">Add Employee</a></li>
+                           <li><a href="{% url 'view_employeepage' %}">View Employee  </a></li>
+                        </ul>
+                     </li>
+
+                     <li class="submenu">
+                        <a href="#"><i class="fas fa-building"></i> <span>Designation</span> <span class="menu-arrow"></span></a>
+                        <ul>
+                           <li><a href="{% url 'add_designationpage' %}">Add Designation</a></li>
+                           <li><a href="{% url 'view_designationpage' %}">View Designation</a></li>
+                        </ul>
+                     </li>
+
+                     <li>
+                          <a href="#"><i class="fas fa-table"></i> <span> Employee Leave Status </span> <span class="menu-arrow"></span></a>
+                     </li>
+
+                     <li>
+                        <a href="time-table.html"><i class="fas fa-table"></i> <span>Attendance List</span></a>
+                     </li>
+
+                     <li>
+                        <a href="fees.html"><i class="fas fa-table"></i> <span>Logout</span></a>
+                     </li>
+                     {% else %}
+                     <li>
+                        <a href="holiday.html"><i class="fas fa-holly-berry"></i> <span>Employee Dashboard</span></a>
+                     </li>
+                     <li>
+                        <a href="exam.html"><i class="fas fa-envelope-open"></i> <span>Apply For Leave</span></a>
+                     </li>
+
+                     <li>
+                        <a href="fees.html"><i class="fas fa-table"></i> <span>Attendance Sheet</span></a>
+                     </li>
+
+                     <li>
+                        <a href="fees.html"><i class="fas fa-table"></i> <span>Logout</span></a>
+                     </li>
+                  </ul>
+                  {% endif %}
+              </div>
+         </div>
+</div>
