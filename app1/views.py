@@ -67,7 +67,6 @@ def PROFILE_UPDATE(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
         print(profile_pic)
-
         try:
             # this code for get id
             customuser = CustomUser.objects.get(id=request.user.id)

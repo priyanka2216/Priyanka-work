@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="col-sm-9">
+   <div class="card">
+      <div class="card-body">
+         <form method="post" action="{% url 'add_designationpage' %}">
+            {% csrf_token %}
+            <div class="col-12">
+               <h3 class="form-title my-3"><span>Apply For Leave</span></h3>
+            </div>
+            {% include 'includes/messages.html' %}
+             <div class="col-12">
+                 <div class="form-group pmd-textfield pmd-textfield-floating-label ">
+                     <label >Leave Type</label>
+                     <select name="leave-type" class="form-control" title="Please select a Leave Type" required>
+                         <option></option>
+                         <option>Sick Leave</option>
+                         <option>Casual Leave</option>
+                         <option>Half Leave</option>
+                         <option>short Leave</option>
+                     </select>
+                 </div>
+             </div>
+             <div class="col-md-12" >
+                 <div class="form-group pmd-textfield pmd-textfield-floating-label">
+                     <label class="control-label" for="datepickerstart">Start Date</label>
+                     <input type="date" class="form-control" id="datepickerstart" name="">
+                 </div>
+             </div>
+             <div class="col-md-12">
+                 <div class="form-group pmd-textfield pmd-textfield-floating-label">
+                     <label class="control-label" for="datepickerend">End Date</label>
+                     <input type="date" class="form-control" id="datepickerend" name="">
+                 </div>
+             </div>
+              <div class="col-12">
+                  <div class="form-group pmd-textfield pmd-textfield-floating-label">
+                      <label>Reason</label>
+                      <textarea class="form-control" id="reason" name="reason"></textarea>
+                  </div>
+              </div>
+
+             <div class="card-footer">
+                 <button type="submit" class="btn btn-primary pmd-ripple-effect pmd-btn-raised" name="applyleave" value="Apply Leave">Apply Leave</button> <a href="leave.html" class="btn btn-outline-secondary pmd-ripple-effect">Cancel</a>
+             </div>
+         </form>
+      </div>
+   </div>
+</div>
+{% endblock %}

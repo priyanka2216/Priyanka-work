@@ -1,19 +1,27 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
-from .models import Designation ,CustomUser,Employee
+from .models import Designation ,CustomUser,Employee,Session_year ,Employee_Notification
 from django.contrib import messages
 from django.db.models import Count
 
 
 @login_required(login_url='/')
 def Home(request):
-    employee_gender_counts = Employee.objects.values('gender').annotate(count=Count('id'))
+    employee_count = Employee.objects.all().count()
+    designation_count = Designation.objects.all().count()
+
+    employee_gender_male =Employee.objects.filter(gender = 'Male').count()
+    employee_gender_female = Employee.objects.filter(gender = 'Female').count()
+    print(employee_gender_male)
+    print(employee_gender_female)
+
     context = {
-        'employee_count': Employee.objects.count(),
-        'designation_count': Designation.objects.count(),
-        'employee_gender_counts': employee_gender_counts,
+        'employee_count':employee_count,
+        'designation_count':designation_count,
+        'employee_gender_male':employee_gender_male,
+        'employee_gender_female':employee_gender_female,
     }
-    return render(request, 'Admin/home.html', context)
+    return render(request, 'Admin/home.html',context)
 
 @login_required(login_url='/')
 def Add_Employee(request):
@@ -184,3 +192,83 @@ def Delete_Designation(request, id):
     designation.delete()
     messages.success(request, "Record Successfully Deleted!!")
     return redirect('view_designationpage')
+
+
+def Add_Session(request):
+    if request.method == "POST":
+        session_year_start = request.POST.get('session_year_start')
+        session_year_end = request.POST.get('session_year_end')
+        print (session_year_start,session_year_end)
+        session = Session_year(
+            session_start = session_year_start,
+            session_end  = session_year_end,
+        )
+        session.save()
+        messages.success(request,"Session Are Successfull Add")
+        return redirect('add_session')
+    return render(request,  "Admin/add_session.html")
+
+
+def View_Session(request):
+    session = Session_year.objects.all()
+    context = {
+      'session' : session,
+    }
+    return render(request, 'Admin/view_session.html', context)
+
+
+def Edit_Session(request, id):
+    session = Session_year.objects.filter(id=id)
+    context={
+            'session': session,
+        }
+    return render(request, 'Admin/edit_session.html', context)
+
+
+def Update_Session(request):
+    if request.method == "POST":
+        session_id = request.POST.get('session_id')
+        session_year_start=request.POST.get('session_year_start')
+        session_year_end =request.POST.get('session_year_end')
+
+        session = Session_year(
+            id = session_id,
+            session_start = session_year_start,
+            session_end = session_year_end,
+        )
+        session.save()
+        messages.success(request, "Record Has Been Successfully Updated")
+        return redirect("view_session")
+    return render(request, "Admin/edit_session.html")
+
+def Delete_Session(request,id):
+    session = Session_year.objects.get(id=id)
+    session.delete()
+    messages.success(request, "Record Successfully Deleted!!")
+    return redirect('view_session')
+
+def Employee_Send_Notification(request):
+    employee = Employee.objects.all()
+    #.order_by use for show message serial wise [0:5] use for leatest 5 message show onle
+    see_notification =  Employee_Notification.objects.all().order_by('-id')[0:5]
+    context = {
+        'employee': employee,
+        'see_notification':see_notification,
+    }
+    return render(request,"Admin/employee_notification.html", context)
+
+
+def Employee_Save_Notification(request):
+    if request.method == "POST":
+        employee_id = request.POST.get('employee_id')
+        message = request.POST.get('message')
+
+        employee = Employee.objects.get(admin=employee_id)
+        notification = Employee_Notification(
+            employee_id = employee,
+            message = message,
+        )
+        notification.save()
+        messages.success(request, "Send Notification Successfully!!")
+        return redirect('employee_send_notification')
+
