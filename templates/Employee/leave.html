@@ -1,50 +1,111 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="col-sm-9">
-   <div class="card">
-      <div class="card-body">
-         <form method="post" action="{% url 'add_designationpage' %}">
-            {% csrf_token %}
-            <div class="col-12">
-               <h3 class="form-title my-3"><span>Apply For Leave</span></h3>
+<div class="content container-fluid">
+    <div class="page-header">
+        <div class="row align-items-center">
+            <div class="col">
+                <h3 class="page-title">Apply Leave</h3>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+                    <li class="breadcrumb-item active">Employees</li>
+                </ul>
             </div>
-            {% include 'includes/messages.html' %}
-             <div class="col-12">
-                 <div class="form-group pmd-textfield pmd-textfield-floating-label ">
-                     <label >Leave Type</label>
-                     <select name="leave-type" class="form-control" title="Please select a Leave Type" required>
-                         <option></option>
-                         <option>Sick Leave</option>
-                         <option>Casual Leave</option>
-                         <option>Half Leave</option>
-                         <option>short Leave</option>
-                     </select>
-                 </div>
-             </div>
-             <div class="col-md-12" >
-                 <div class="form-group pmd-textfield pmd-textfield-floating-label">
-                     <label class="control-label" for="datepickerstart">Start Date</label>
-                     <input type="date" class="form-control" id="datepickerstart" name="">
-                 </div>
-             </div>
-             <div class="col-md-12">
-                 <div class="form-group pmd-textfield pmd-textfield-floating-label">
-                     <label class="control-label" for="datepickerend">End Date</label>
-                     <input type="date" class="form-control" id="datepickerend" name="">
-                 </div>
-             </div>
-              <div class="col-12">
-                  <div class="form-group pmd-textfield pmd-textfield-floating-label">
-                      <label>Reason</label>
-                      <textarea class="form-control" id="reason" name="reason"></textarea>
-                  </div>
-              </div>
+            <div class="col-auto text-right float-right ml-auto">
+                <button class="btn btn-outline-primary mr-2" data-toggle="modal" data-target=".bd-example-modal-lg" type="button">Leave History</button>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-9">
+        <div class="card">
+            <div class="card-body">
+                <form method="post" action="{% url 'employee_leave_save' %}">
+                    {% csrf_token %}
+                    <div class="col-12">
+                        <h3 class="form-title my-3"><span>Apply For Leave</span></h3>
+                    </div>
+                    {% include 'includes/messages.html' %}
+                    <div class="col-12">
+                        <div class="form-group pmd-textfield pmd-textfield-floating-label">
+                            <label for="leave_type">Leave Type</label>
+                            <select id="leave_type" name="leave_type" class="form-control" title="Please select a Leave Type" required>
+                                <option value="" disabled selected>Select Leave Type</option>
+                                <option value="Sick Leave">Sick Leave</option>
+                                <option value="Casual Leave">Casual Leave</option>
+                                <option value="Half Leave">Half Leave</option>
+                                <option value="Short Leave">Short Leave</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group pmd-textfield pmd-textfield-floating-label">
+                            <label for="leave_date">Leave Date</label>
+                            <input type="date" class="form-control" id="leave_date" name="leave_date" required>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group pmd-textfield pmd-textfield-floating-label">
+                            <label for="message">Message</label>
+                            <textarea id="message" class="form-control" name="message" style="height:150px" required></textarea>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary pmd-ripple-effect pmd-btn-raised" name="submit" value="Apply Leave">Apply Leave</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
-             <div class="card-footer">
-                 <button type="submit" class="btn btn-primary pmd-ripple-effect pmd-btn-raised" name="applyleave" value="Apply Leave">Apply Leave</button> <a href="leave.html" class="btn btn-outline-secondary pmd-ripple-effect">Cancel</a>
-             </div>
-         </form>
-      </div>
-   </div>
+<!-- Large modal -->
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Employee Leave History</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="col-sm-12">
+                    <div class="card card-table">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover table-center mb-0 datatable">
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Reason</th>
+                                            <th class="text-right">Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for i in employee_leave_history %}
+                                        <tr>
+                                            <td>{{ i.data }}</td>
+                                            <td>{{ i.message }}</td>
+                                            <td class="text-right">
+                                                <div class="actions">
+                                                    {% if i.status == 0 %}
+                                                    <span class="badge badge-info">Request are pending</span>
+                                                    {% elif i.status == 1 %}
+                                                    <a href="#" class="badge badge-success">Accepted</a>
+                                                    {% else %}
+                                                    <a href="#" class="badge badge-danger">Reject</a>
+                                                    {% endif %}
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}

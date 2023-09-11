@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
-from .models import Designation ,CustomUser,Employee,Session_year ,Employee_Notification
+from .models import Designation ,CustomUser,Employee,Session_year ,Employee_Notification,Employee_leave
 from django.contrib import messages
 from django.db.models import Count
 
@@ -272,3 +272,24 @@ def Employee_Save_Notification(request):
         messages.success(request, "Send Notification Successfully!!")
         return redirect('employee_send_notification')
 
+
+def Employee_Leave_View(request):
+    employee_leave = Employee_leave.objects.all()
+    context = {
+        'employee_leave': employee_leave,
+    }
+    return render(request, "Admin/employee_leave.html", context)
+
+
+def Employee_Approve_leave(request, id):
+    leave = Employee_leave.objects.get(id=id)
+    leave.status = 1
+    leave.save()
+    return redirect('leave_view')
+
+
+def Employee_Disapprove_leave(request,id):
+    leave = Employee_leave.objects.get(id=id)
+    leave.status = 2
+    leave.save()
+    return redirect('leave_view')

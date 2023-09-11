@@ -37,6 +37,10 @@ urlpatterns = [
 
     path('Admin/Employee/Send_Notification', Admin_Views.Employee_Send_Notification, name= "employee_send_notification"),
     path('Admin/Employee/Save_Notification', Admin_Views.Employee_Save_Notification, name= "employee_save_notification"),
+    path('Admin/Leave_View', Admin_Views.Employee_Leave_View, name="leave_view"),
+    path('Admin/Employee_approve_leave/<str:id>', Admin_Views.Employee_Approve_leave,name="approve_leave"),
+    path('Admin/Employee_disapprove_leave/<str:id>', Admin_Views.Employee_Disapprove_leave, name="disapprove_leave"),
+
     #Middleware urls
     path('redirecttohome', views.redirectToHome, name="redirectToHome_page"),
 
@@ -44,7 +48,8 @@ urlpatterns = [
     path('Employee/home',Employee_Views.Home, name="employee/homepage"),
     path('Employee/Notification', Employee_Views.Notification, name="notification"),
     path('Employee/mark_as_done/<str:status>/', Employee_Views.Mark_As_Done, name="mark_as_done"),
-    path('Employee/employee_leave',Employee_Views.Employee_Leave, name="apply_leave" )
+    path('Employee/employee_leave',Employee_Views.Employee_Leave, name="apply_leave" ),
+    path('Emplyee/employee_save_leave', Employee_Views.Employee_Save_Leave, name="employee_leave_save"),
 
 
 ]+ static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
