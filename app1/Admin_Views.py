@@ -9,6 +9,7 @@ from django.db.models import Count
 def Home(request):
     employee_count = Employee.objects.all().count()
     designation_count = Designation.objects.all().count()
+    employee_leave_count = Designation.objects.all().count()
 
     employee_gender_male =Employee.objects.filter(gender = 'Male').count()
     employee_gender_female = Employee.objects.filter(gender = 'Female').count()
@@ -18,6 +19,7 @@ def Home(request):
     context = {
         'employee_count':employee_count,
         'designation_count':designation_count,
+        'employee_leave_count':employee_leave_count,
         'employee_gender_male':employee_gender_male,
         'employee_gender_female':employee_gender_female,
     }
