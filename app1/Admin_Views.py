@@ -4,12 +4,11 @@ from .models import Designation ,CustomUser,Employee,Session_year ,Employee_Noti
 from django.contrib import messages
 from django.db.models import Count
 
-
 @login_required(login_url='/')
 def Home(request):
     employee_count = Employee.objects.all().count()
     designation_count = Designation.objects.all().count()
-    employee_leave_count = Designation.objects.all().count()
+    employee_leave_count = Employee_leave.objects.all().count()
 
     employee_gender_male =Employee.objects.filter(gender = 'Male').count()
     employee_gender_female = Employee.objects.filter(gender = 'Female').count()

@@ -1,5 +1,40 @@
 {% extends 'base.html' %}
+{% block content %}
 {% load static %}
-  {% block content %}
+<div class="content container-fluid">
+   <!-- ... other HTML code ... -->
 
- {% endblock %}
+   <!-- Display Employee Notifications -->
+   <div class="row">
+      <div class="col-xl-12 col-sm-11 col-12 d-flex">
+         <div class="card bg-one w-100">
+            <div class="card-body">
+               <h2>Employee Notifications</h2>
+               <ul>
+                  {% for notification in employee_notifications %}
+                     <li>{{ notification.message }}</li>
+                  {% endfor %}
+               </ul>
+            </div>
+         </div>
+      </div>
+   </div>
+
+   <!-- Display Employee Leave Requests -->
+   <div class="row">
+      <div class="col-xl-12 col-sm-11 col-12 d-flex">
+         <div class="card bg-two w-100">
+            <div class="card-body">
+               <h2>Employee Leave Requests</h2>
+               <ul>
+                  {% for leave_request in employee_leave_requests %}
+                     <li>{{ leave_request.message }}</li>
+                  {% endfor %}
+               </ul>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+
+{% endblock %}

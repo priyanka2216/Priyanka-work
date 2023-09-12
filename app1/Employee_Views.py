@@ -1,9 +1,19 @@
 from django.shortcuts import render,redirect
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from .models import Employee , Employee_Notification , Employee_leave
 
+@login_required(login_url='/')
 def Home(request):
-    return render(request, 'Employee/home.html')
+    employee_notifications = Employee_Notification.objects.filter(employee_id=request.user.id)
+    employee_leave_requests = Employee_leave.objects.filter(employee_id=request.user.id)
+
+    context = {
+        'employee_notifications': employee_notifications,
+        'employee_leave_requests': employee_leave_requests,
+    }
+
+    return render(request, 'Employee/home.html', context)
 
 
 def Notification(request):
