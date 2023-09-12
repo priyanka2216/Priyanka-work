@@ -62,9 +62,13 @@ class Employee_leave(models.Model):
     def __str__(self):
         return f"{self.employee_id.admin.first_name} {self.employee_id.admin.last_name}"
 
+class Attendance(models.Model):
+        employee_id = models.ForeignKey(Employee, on_delete=models.CASCADE)
+        date = models.DateField()
+        login_time = models.TimeField()
+        logout_time = models.TimeField(null=True, blank=True)
 
-
-
-
+        def __str__(self):
+            return f"{self.employee_id} - {self.date.strftime('%Y-%m-%d')}"
 
 

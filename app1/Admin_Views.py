@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
-from .models import Designation ,CustomUser,Employee,Session_year ,Employee_Notification,Employee_leave
+from .models import Designation ,CustomUser,Employee,Session_year ,Employee_Notification,Employee_leave,Attendance
 from django.contrib import messages
 from django.db.models import Count
 
@@ -12,8 +12,6 @@ def Home(request):
 
     employee_gender_male =Employee.objects.filter(gender = 'Male').count()
     employee_gender_female = Employee.objects.filter(gender = 'Female').count()
-    print(employee_gender_male)
-    print(employee_gender_female)
 
     context = {
         'employee_count':employee_count,
@@ -77,6 +75,7 @@ def Add_Employee(request):
     return render(request, "Admin/add_employee.html", context)
 
 #fetch all data in employee dashbord
+@login_required(login_url='/')
 def View_Employee(request):
     employee=Employee.objects.all()
     print(employee)
@@ -97,7 +96,7 @@ def Edit_Employee(request,id):
     }
     return render(request,"Admin/edit_employee.html",context)
 
-
+@login_required(login_url='/')
 def Update_Employee(request):
     #get a post request value
     if request.method =="POST":
@@ -145,7 +144,7 @@ def Delete_Employee(request,admin):
     messages.success(request,"Record Successfully Delete!!")
     return redirect('view_employeepage')
 
-
+@login_required(login_url='/')
 def Add_Designation(request):
     if request.method == "POST":
         designation_name = request.POST.get('designation_name')
@@ -194,7 +193,7 @@ def Delete_Designation(request, id):
     messages.success(request, "Record Successfully Deleted!!")
     return redirect('view_designationpage')
 
-
+@login_required(login_url='/')
 def Add_Session(request):
     if request.method == "POST":
         session_year_start = request.POST.get('session_year_start')
@@ -209,7 +208,7 @@ def Add_Session(request):
         return redirect('add_session')
     return render(request,  "Admin/add_session.html")
 
-
+@login_required(login_url='/')
 def View_Session(request):
     session = Session_year.objects.all()
     context = {
@@ -248,6 +247,7 @@ def Delete_Session(request,id):
     messages.success(request, "Record Successfully Deleted!!")
     return redirect('view_session')
 
+@login_required(login_url='/')
 def Employee_Send_Notification(request):
     employee = Employee.objects.all()
     #.order_by use for show message serial wise [0:5] use for leatest 5 message show onle
@@ -258,7 +258,7 @@ def Employee_Send_Notification(request):
     }
     return render(request,"Admin/employee_notification.html", context)
 
-
+@login_required(login_url='/')
 def Employee_Save_Notification(request):
     if request.method == "POST":
         employee_id = request.POST.get('employee_id')
@@ -273,7 +273,7 @@ def Employee_Save_Notification(request):
         messages.success(request, "Send Notification Successfully!!")
         return redirect('employee_send_notification')
 
-
+@login_required(login_url='/')
 def Employee_Leave_View(request):
     employee_leave = Employee_leave.objects.all()
     context = {
@@ -288,9 +288,16 @@ def Employee_Approve_leave(request, id):
     leave.save()
     return redirect('leave_view')
 
-
 def Employee_Disapprove_leave(request,id):
     leave = Employee_leave.objects.get(id=id)
     leave.status = 2
     leave.save()
     return redirect('leave_view')
+
+
+def Admin_Attendance_View(request):
+    admin_attendance = Attendance.objects.all()
+    context={
+        'admin_attendance':admin_attendance
+    }
+    return render(request, 'Admin/attendance_view.html',context)

@@ -40,6 +40,7 @@ urlpatterns = [
     path('Admin/Leave_View', Admin_Views.Employee_Leave_View, name="leave_view"),
     path('Admin/Employee_approve_leave/<str:id>', Admin_Views.Employee_Approve_leave,name="approve_leave"),
     path('Admin/Employee_disapprove_leave/<str:id>', Admin_Views.Employee_Disapprove_leave, name="disapprove_leave"),
+    path('Admin/Attendance_View', Admin_Views.Admin_Attendance_View, name="attendance_view"),
 
     #Middleware urls
     path('redirecttohome', views.redirectToHome, name="redirectToHome_page"),
@@ -50,6 +51,7 @@ urlpatterns = [
     path('Employee/mark_as_done/<str:status>/', Employee_Views.Mark_As_Done, name="mark_as_done"),
     path('Employee/employee_leave',Employee_Views.Employee_Leave, name="apply_leave" ),
     path('Emplyee/employee_save_leave', Employee_Views.Employee_Save_Leave, name="employee_leave_save"),
+    path('Employee/Attendance/Sheet', Employee_Views.Attendance_Sheet, name="attendance_sheet"),
 
 
 ]+ static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
