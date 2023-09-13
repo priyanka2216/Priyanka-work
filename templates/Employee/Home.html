@@ -1,48 +1,92 @@
 {% extends 'base.html' %}
 {% block content %}
 {% load static %}
-<div class="content container-fluid">
-   <div class="page-header">
-      <div class="row">
-         <div class="col-sm-12">
-            <h3 class="page-title">Welcome To Dashboard!</h3>
-            <ul class="breadcrumb">
-               <li class="breadcrumb-item active">Dashboard</li>
-            </ul>
-         </div>
-      </div>
-   </div>
-   <div class="row">
-      <div class="col-xl-6 col-sm-11 col-12 d-flex">
-         <div class="card bg-one w-100 h-200px" >
-            <div class="card-body">
-               <div class="db-widgets d-flex justify-content-between align-items-center">
-                  <div class="db-icon">
-                     <i class="fas fa-user-graduate"></i>
-                  </div>
-                  <div class="db-info">
-                     <h2>{{ employee_leave_requests }}</h2>
-                     <h2>Number Of Leave</h2>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
-      <div class="col-xl-6 col-sm-11 col-12 d-flex">
-         <div class="card bg-two w-100">
-            <div class="card-body">
-               <div class="db-widgets d-flex justify-content-between align-items-center">
-                  <div class="db-icon">
-                     <i class="fas fa-building"></i>
-                  </div>
-                  <div class="db-info">
-                     <h2>{{ employee_notifications }}</h2>
-                     <h2>Number Of Notification</h2>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
-   </div>
-</div>
+
+<style>
+    #attendanceSheet {
+        border-collapse: collapse;
+        width: 80%;
+        margin: 30px;
+    }
+    #attendanceSheet th, #attendanceSheet td {
+        border: 1px solid black;
+        padding: 8px;
+        text-align: center;
+    }
+    #logButton {
+        padding: 10px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+</style>
+
+<h1>Employee Attendance</h1>
+
+<form method="post" action="{% url 'attendance_sheet' %}">
+    {% csrf_token %}
+    <label for="login_time">Login Time:</label>
+    <input type="time" id="login_time" name="login_time" required>
+
+    <label for="logout_time">Logout Time:</label>
+    <input type="time" id="logout_time" name="logout_time">
+
+    <button type="submit" class="btn btn-success">Submit Attendance</button>
+</form>
+
+<table id="attendanceSheet">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Login Time</th>
+            <th>Logout Time</th>
+        </tr>
+    </thead>
+    <tbody id="attendanceData">
+        {% for attendance_record in employee_attendance %}
+        <tr>
+            <td>{{ attendance_record.date }}</td>
+            <td>{{ attendance_record.login_time }}</td>
+            <td>{{ attendance_record.logout_time }}</td>6
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<script>
+    let loggedIn = false;
+    const attendanceData = document.getElementById('attendanceData');
+    const logButton = document.getElementById('logButton');
+
+    function toggleLogInOut() {
+        if (loggedIn) {
+            // Log Out
+            const logoutTime = new Date().toLocaleTimeString();
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td>${new Date().toLocaleDateString()}</td>
+                <td>${localStorage.getItem('loginTime')}</td>
+                <td>${logoutTime}</td>
+            `;
+            attendanceData.appendChild(newRow);
+            localStorage.removeItem('loginTime');
+            logButton.textContent = 'Log In';
+            loggedIn = false;
+        } else {
+            // Log In
+            const loginTime = new Date().toLocaleTimeString();
+            localStorage.setItem('loginTime', loginTime);
+            logButton.textContent = 'Log Out';
+            loggedIn = true;
+        }
+    }
+
+    // Initialize the button text based on previous state
+    if (localStorage.getItem('loginTime')) {
+        logButton.textContent = 'Log Out';
+        loggedIn = true;
+    }
+</script>
+
 {% endblock %}
