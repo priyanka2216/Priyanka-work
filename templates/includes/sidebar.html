@@ -5,76 +5,76 @@
                   {% if user.user_type == '1' %}
                   <ul>
                      <li class="menu-title">
-                        <span style="font-weight: bold; color: rgb(31, 214, 31); font-size: 20px;">Main Menu</span>
+                        <span style=" font-size: 20px;">Main Menu</span>
                      </li>
-                     <li class="submenu active">
-                      <a href="#"><i class="fas fa-table"></i> <span style="font-weight: bold; font-size: 18px ;"> Dashbord</span> <span class="menu-arrow"></span></a>
+                     <li class="submenu ">
+                      <a href="#"><i class="fas fa-table"></i> <span style=" font-size: 18px ;"> Dashbord</span> <span class="menu-arrow"></span></a>
                         <ul>
-                           <li><a href="{% url 'Admin/homepage' %}" class="active" style="font-weight: bold; font-size: 18px ;">Employee Dashboard</a></li>
+                           <li><a href="{% url 'Admin/homepage' %}"style=" font-size: 18px ;">Employee Dashboard</a></li>
                         </ul>
                      </li>
-                     <li class="submenu active">
-                        <a href="{% url 'Admin/homepage' %}"><i class="fas fa-user-graduate"></i> <span class="active" style="font-weight: bold; font-size: 18px;"> Employee</span> <span class="menu-arrow"></span></a>
+                     <li class="submenu ">
+                        <a href="{% url 'Admin/homepage' %}"><i class="fas fa-user-graduate"></i> <span style=" font-size: 18px;"> Employee</span> <span class="menu-arrow"></span></a>
                         <ul>
-                           <li><a href="{% url 'add_employeepage' %}" style="font-weight: bold; font-size: 18px;" class="active">Add Employee</a></li>
-                           <li><a href="{% url 'view_employeepage' %}" style="font-weight: bold; font-size: 18px;" class="active">View Employee  </a></li>
-                        </ul>
-                     </li>
-
-                     <li class="submenu active">
-                        <a href="#"><i class="fas fa-building"></i> <span style="font-weight: bold; font-size: 18px;" >Designation</span> <span class="menu-arrow"></span></a>
-                        <ul>
-                           <li><a href="{% url 'add_designationpage' %}" style="font-weight: bold; font-size: 18px;" class="active">Add Designation</a></li>
-                           <li><a href="{% url 'view_designationpage' %}" style="font-weight: bold; font-size: 18px;" class="active">View Designation</a></li>
+                           <li><a href="{% url 'add_employeepage' %}" style=" font-size: 18px;" class="">Add Employee</a></li>
+                           <li><a href="{% url 'view_employeepage' %}" style=" font-size: 18px;" class="">View Employee  </a></li>
                         </ul>
                      </li>
 
-                      <li class="submenu active">
-                        <a href="#"><i class="fas fa-user-graduate"></i> <span style="font-weight: bold; font-size: 18px;" > Session</span> <span class="menu-arrow"></span></a>
+                     <li class="submenu ">
+                        <a href="#"><i class="fas fa-building"></i> <span style=" font-size: 18px;" >Designation</span> <span class="menu-arrow"></span></a>
                         <ul>
-                           <li><a href="{% url 'add_session' %}" style="font-weight: bold; font-size: 18px;" class="active">Add Session</a></li>
-                           <li><a href="{% url 'view_session' %}" style="font-weight: bold; font-size: 18px;" class="active">View Session </a></li>
+                           <li><a href="{% url 'add_designationpage' %}" style=" font-size: 18px;" class="">Add Designation</a></li>
+                           <li><a href="{% url 'view_designationpage' %}" style=" font-size: 18px;" class="">View Designation</a></li>
+                        </ul>
+                     </li>
+
+                      <li class="submenu ">
+                        <a href="#"><i class="fas fa-user-graduate"></i> <span style="font-size: 18px;" > Session</span> <span class="menu-arrow"></span></a>
+                        <ul>
+                           <li><a href="{% url 'add_session' %}" style=" font-size: 18px;" >Add Session</a></li>
+                           <li><a href="{% url 'view_session' %}" style=" font-size: 18px;" >View Session </a></li>
 
                         </ul>
                      </li>
 
-                     <li class="active">
-                          <a href="{% url 'employee_send_notification' %}"><i class="fas fa-bell"></i> <span class="active" style="font-weight: bold; font-size: 18px;"> Send Notification Employee </span> <span class="menu-arrow"></span></a>
+                     <li class="">
+                          <a href="{% url 'employee_send_notification' %}"><i class="fas fa-bell"></i> <span class="active" style="font-size: 18px;"> Send Notification Employee </span> <span class="menu-arrow"></span></a>
                      </li>
 
-                     <li class="active">
-                          <a href="{% url 'leave_view' %}"><i class="fas fa-table"></i> <span class="active"  style="font-weight: bold; font-size: 18px;"> Employee Leave Status </span> <span class="menu-arrow"></span></a>
+                     <li class="">
+                          <a href="{% url 'leave_view' %}"><i class="fas fa-table"></i> <span class="active"  style="font-size: 18px;"> Employee Leave Status </span> <span class="menu-arrow"></span></a>
                      </li>
 
-                     <li class="active">
-                        <a href="{% url 'attendance_view'%}"><i class="fas fa-table" ></i> <span class="active" style="font-weight: bold; font-size: 18px;" > Employee Attendance List</span></a>
+                     <li class="">
+                        <a href="{% url 'attendance_view'%}"><i class="fas fa-table" ></i> <span class="active" style="font-size: 18px;" > Employee Attendance List</span></a>
                      </li>
 
-                     <li class="active">
-                        <a href="{% url 'dologout_page' %}"><i class="fas fa-sign-out-alt" ></i> <span class="active" style="font-weight: bold; font-size: 18px;" >Logout</span></a>
+                     <li class="">
+                        <a href="{% url 'dologout_page' %}"><i class="fas fa-sign-out-alt" ></i> <span class="active" style=" font-size: 18px;" >Logout</span></a>
                      </li>
                      {% else %}
                       <li class="menu-title active">
                         <span style="font-weight: bold; color: rgb(31, 214, 31); font-size: 20px;">Main Menu</span>
                      </li>
-                     <li class="active">
-                        <a href="{% url 'employee/homepage' %}"><i class="fas fa-holly-berry"></i> <span style="font-weight: bold; font-size: 18px;" class="active">Dashboard</span></a>
+                     <li class="">
+                        <a href="{% url 'employee/homepage' %}"><i class="fas fa-holly-berry"></i> <span style=" font-size: 18px;" class="active">Dashboard</span></a>
                      </li>
 
-                     <li class="active">
-                        <a href="{% url 'notification' %}"><i class="fas fa-bell"></i> <span style="font-weight: bold; font-size: 18px;" class="active">Notification</span></a>
+                     <li class="">
+                        <a href="{% url 'notification' %}"><i class="fas fa-bell"></i> <span style=" font-size: 18px;" class="active">Notification</span></a>
                      </li>
 
-                      <li class="active">
-                        <a href="{% url 'apply_leave' %}"><i class="fas fa-envelope-open"></i> <span style="font-weight: bold; font-size: 18px;" class="active">Apply For Leave</span></a>
+                      <li class="">
+                        <a href="{% url 'apply_leave' %}"><i class="fas fa-envelope-open"></i> <span style="font-size: 18px;" class="active">Apply For Leave</span></a>
                      </li>
 
-                       <li class="active">
-                        <a href="{% url 'attendance_sheet'%}"><i class="fas fa-table"></i> <span style="font-weight: bold; font-size: 18px;" class="active">Attendance Sheet</span></a>
+                       <li class="">
+                        <a href="{% url 'attendance_sheet'%}"><i class="fas fa-table"></i> <span style=" font-size: 18px;" class="active">Attendance Sheet</span></a>
                      </li>
 
-                     <li class="active">
-                        <a href="{% url 'dologout_page' %}"><i class="fas fa-sign-out-alt"></i> <span style="font-weight: bold; font-size: 18px;" class="active">Logout</span></a>
+                     <li class="">
+                        <a href="{% url 'dologout_page' %}"><i class="fas fa-sign-out-alt"></i> <span style=" font-size: 18px;" class="active">Logout</span></a>
                      </li>
                   </ul>
                   {% endif %}
