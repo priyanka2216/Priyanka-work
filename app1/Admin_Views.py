@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Designation ,CustomUser,Employee,Session_year ,Employee_Notification,Employee_leave,Attendance
 from django.contrib import messages
 from django.db.models import Count
+from django.core.paginator import Paginator
 
 @login_required(login_url='/')
 def Home(request):
@@ -155,14 +156,29 @@ def Add_Designation(request):
         messages.success(request, "Designation Are Successfully Created!!")
         return redirect('add_designationpage')
     return render(request, "Admin/add_designation.html")
+# ***********************************
 
 def View_Designation(request):
-    designation =Designation.objects.all()
+    designation_list = Designation.objects.all().order_by('-id')
+    items_per_page = 10
+    page_number = request.GET.get('page')
+    paginator = Paginator(designation_list, items_per_page)
+    page = paginator.get_page(page_number)
+    context = {
+        'designation': page,
+    }
+    return render(request, "Admin/view_designation.html", context)
+
+
+'''def View_Designation(request):
+    designation =Designation.objects.all().order_by('-id')[0:10]
     context = {
         'designation': designation,
     }
 
     return render(request, "Admin/view_designation.html",context)
+'''
+# *************************************************
 
 
 def Edit_Designation(request,id):
@@ -296,7 +312,7 @@ def Employee_Disapprove_leave(request,id):
 
 
 def Admin_Attendance_View(request):
-    admin_attendance = Attendance.objects.all()
+    admin_attendance = Attendance.objects.all().order_by('-id')[0:5]
     context={
         'admin_attendance':admin_attendance
     }

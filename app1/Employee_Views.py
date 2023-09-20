@@ -6,16 +6,8 @@ from .models import Employee , Employee_Notification , Employee_leave ,Attendanc
 
 @login_required(login_url='/')
 def Home(request):
-    employee_id = request.user.id
-    employee_notifications = Employee_Notification.objects.filter(employee_id=employee_id).count()
-    employee_leave_requests = Employee_leave.objects.filter(employee_id=employee_id).count()
 
-    context = {
-        'employee_notifications': employee_notifications,
-        'employee_leave_requests': employee_leave_requests,
-    }
-
-    return render(request, 'Employee/home.html', context)
+    return render(request, 'Employee/home.html')
 
 @login_required(login_url='/')
 def Notification(request):
