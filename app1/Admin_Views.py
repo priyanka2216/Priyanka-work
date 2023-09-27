@@ -66,7 +66,6 @@ def Add_Employee(request):
                     gender = gender,
                 )
                 employee.save()
-
                 messages.success(request, user.first_name + " " +user.last_name + " are successfully add!!")
                 return redirect('add_employeepage')
 
@@ -78,12 +77,15 @@ def Add_Employee(request):
 #fetch all data in employee dashbord
 @login_required(login_url='/')
 def View_Employee(request):
-    employee=Employee.objects.all()
-    print(employee)
-    context = {
-        'employee': employee,  # Update the context variable name
-    }
-    return render(request, "Admin/view_employee.html",context)
+        employee_list = Employee.objects.all().order_by('-id')
+        items_per_page = 10
+        page_number = request.GET.get('page')
+        paginator = Paginator(employee_list, items_per_page)
+        page = paginator.get_page(page_number)
+        context = {
+            'employee': page,
+        }
+        return render(request, "Admin/view_employee.html", context)
 
 # create function for edit  Employee Records
 def Edit_Employee(request,id):
@@ -92,8 +94,6 @@ def Edit_Employee(request,id):
     context = {
         'employee' : employee,
         'designation_list': designation_list,
-
-
     }
     return render(request,"Admin/edit_employee.html",context)
 
@@ -112,7 +112,6 @@ def Update_Employee(request):
         address = request.POST.get('address')
         designation_id = request.POST.get('designation_id')
         gender = request.POST.get('gender')
-        # print(profile_pic,first_name,last_name,email,username,password,address,designation_id,gender)
         # this id use for update data
         user=CustomUser.objects.get(id=employee_id)
         # this user.profile_pic = profile_pic use for save data
@@ -135,9 +134,7 @@ def Update_Employee(request):
         employee.save()
         messages.success(request,"Record Are Successfully updated!!")
         return redirect('view_employeepage')
-
     return render(request,"Admin/edit_employee.html")
-
 
 def Delete_Employee(request,admin):
     employee =CustomUser.objects.get(id=admin)
@@ -169,18 +166,6 @@ def View_Designation(request):
     }
     return render(request, "Admin/view_designation.html", context)
 
-
-'''def View_Designation(request):
-    designation =Designation.objects.all().order_by('-id')[0:10]
-    context = {
-        'designation': designation,
-    }
-
-    return render(request, "Admin/view_designation.html",context)
-'''
-# *************************************************
-
-
 def Edit_Designation(request,id):
     designation = Designation.objects.get(id = id)
     context = {
@@ -199,9 +184,7 @@ def Update_Designation(request, id):
         designation.save()
         messages.success(request, "Record Are Successfully Updated!!")
         return redirect('view_designationpage')
-
     return render(request, "Admin/edit_designation.html")
-
 
 def Delete_Designation(request, id):
     designation = Designation.objects.get(id=id)
@@ -310,10 +293,10 @@ def Employee_Disapprove_leave(request,id):
     leave.save()
     return redirect('leave_view')
 
-
 def Admin_Attendance_View(request):
     admin_attendance = Attendance.objects.all().order_by('-id')[0:5]
     context={
+
         'admin_attendance':admin_attendance
     }
     return render(request, 'Admin/attendance_view.html',context)

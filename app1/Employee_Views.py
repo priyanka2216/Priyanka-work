@@ -6,8 +6,14 @@ from .models import Employee , Employee_Notification , Employee_leave ,Attendanc
 
 @login_required(login_url='/')
 def Home(request):
-
-    return render(request, 'Employee/home.html')
+    employee = Employee.objects.filter(admin=request.user.id)
+    for i in employee:
+        employee_id = i.id
+        employee_attendance = Attendance.objects.filter(employee_id=employee_id)
+        context = {
+            'employee_attendance': employee_attendance,
+        }
+        return render(request, 'Employee/home.html', context)
 
 @login_required(login_url='/')
 def Notification(request):
@@ -55,22 +61,40 @@ def Employee_Save_Leave(request):
         messages.success(request, "Employee Leave Successfully Submit!!")
         return redirect('apply_leave')
 
-
+@login_required(login_url='/')
 def Attendance_Sheet(request):
+    employee_id = request.user.employee
+    today_date = timezone.now().date()
+    has_logged_in_today = Attendance.objects.filter(
+        employee_id=employee_id,
+        date=today_date,
+        logout_time__isnull=True  # Check if there is no logout time for today
+    ).exists()
+
     if request.method == 'POST':
-        employee_id = request.user.employee
-        login_time = request.POST.get('login_time')
-        logout_time = request.POST.get('logout_time')
+        action = request.POST.get('action')
+        if action == 'login':
+            if not has_logged_in_today:
+                login_time = timezone.now().time()
+                attendance = Attendance(
+                    employee_id=employee_id,
+                    date=today_date,
+                    login_time=login_time,
+                )
+                attendance.save()
+        elif action == 'logout':
+            if has_logged_in_today:
+                logout_time = timezone.now().time()
+                print(logout_time)
+                latest_login = Attendance.objects.filter(
+                    employee_id=employee_id,
+                    date=today_date,
+                    logout_time__isnull=True
+                ).order_by('-id').first()
+                if latest_login:
+                    latest_login.logout_time = logout_time
+                    latest_login.save()
 
-        attendance = Attendance(
-            employee_id=employee_id,
-            date=timezone.now().date(),
-            login_time=login_time,
-            logout_time=logout_time if logout_time else None
-        )
-        attendance.save()
+    employee_attendance = Attendance.objects.filter(employee_id=employee_id)
 
-    employee_attendance = Attendance.objects.filter(employee_id=request.user.employee)
-
-    return render(request, 'Employee/attendance_sheet.html', {'employee_attendance': employee_attendance})
-
+    return render(request, 'Employee/attendance_sheet.html', {'employee_attendance': employee_attendance, 'loggedIn': has_logged_in_today})
