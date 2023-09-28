@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Designation ,CustomUser,Employee,Session_year ,Employee_Notification,Employee_leave,Attendance
 from django.contrib import messages
 from django.db.models import Count
+from django.shortcuts import render, redirect, get_object_or_404
 from django.core.paginator import Paginator
 
 @login_required(login_url='/')
@@ -300,3 +301,52 @@ def Admin_Attendance_View(request):
         'admin_attendance':admin_attendance
     }
     return render(request, 'Admin/attendance_view.html',context)
+
+def Delete_Attendance(request , id):
+    attendance = Attendance.objects.get(id=id)
+    attendance.delete()
+    messages.success(request, "Record Successfully Deleted!!")
+    return redirect('attendance_view')
+
+
+
+from .models import Attendance
+from django.contrib import messages
+
+
+def Edit_Attendance(request, id):
+    # Retrieve the attendance record based on the provided ID
+    attendance = get_object_or_404(Attendance, id=id)
+    if request.method == "POST":
+
+        date = request.POST.get('date')
+        login_time = request.POST.get('login_time')
+        logout_time = request.POST.get('logout_time')
+
+        attendance.date = date
+        attendance.login_time = login_time
+        attendance.logout_time = logout_time
+        attendance.save()
+
+        messages.success(request, "Record Has Been Successfully Updated")
+        return redirect("attendance_view")
+    return render(request, "Admin/edit_attendance.html", {'attendance': attendance})
+
+# def Update_Attendance(request):
+#     if request.method == "POST":
+#         attendance_id = request.POST.get('attendance_id')
+#         date = request.POST.get('date')
+#         login_time=request.POST.get('login_time')
+#         logout_time =request.POST.get('logout_time')
+#
+#         attendance = Attendance(
+#             id = attendance_id,
+#             login_time= login_time,
+#             logout_time = logout_time,
+#             date = date,
+#         )
+#         attendance.save()
+#         messages.success(request, "Record Has Been Successfully Updated")
+#         return redirect("attendance_view")
+#     return render(request,"Admin/edit_attendance.html")
+

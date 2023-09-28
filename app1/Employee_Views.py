@@ -3,6 +3,7 @@ from django.contrib import messages
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from .models import Employee , Employee_Notification , Employee_leave ,Attendance
+import datetime
 
 @login_required(login_url='/')
 def Home(request):
@@ -75,7 +76,7 @@ def Attendance_Sheet(request):
         action = request.POST.get('action')
         if action == 'login':
             if not has_logged_in_today:
-                login_time = timezone.now().time()
+                login_time = datetime.datetime.now()
                 attendance = Attendance(
                     employee_id=employee_id,
                     date=today_date,
@@ -84,7 +85,7 @@ def Attendance_Sheet(request):
                 attendance.save()
         elif action == 'logout':
             if has_logged_in_today:
-                logout_time = timezone.now().time()
+                logout_time = datetime.datetime.now()
                 print(logout_time)
                 latest_login = Attendance.objects.filter(
                     employee_id=employee_id,

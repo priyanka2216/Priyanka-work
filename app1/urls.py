@@ -40,8 +40,10 @@ urlpatterns = [
     path('Admin/Leave_View', Admin_Views.Employee_Leave_View, name="leave_view"),
     path('Admin/Employee_approve_leave/<str:id>', Admin_Views.Employee_Approve_leave,name="approve_leave"),
     path('Admin/Employee_disapprove_leave/<str:id>', Admin_Views.Employee_Disapprove_leave, name="disapprove_leave"),
-    path('Admin/Attendance_View', Admin_Views.Admin_Attendance_View, name="attendance_view"),
 
+    path('Admin/Attendance_View', Admin_Views.Admin_Attendance_View, name="attendance_view"),
+    path('Admin/Delete/attendance/<int:id>/', Admin_Views.Delete_Attendance, name="delete_attendance"),
+    path('Admin/Edit/Attendance/<int:id>/', Admin_Views.Edit_Attendance, name="edit_attendance"),
     #Middleware urls
     path('redirecttohome', views.redirectToHome, name="redirectToHome_page"),
 
