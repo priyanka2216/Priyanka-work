@@ -24,8 +24,8 @@ SECRET_KEY = 'django-insecure-1w_ri6qsxj@lmm=5y5b-sdhr&clhot9rxbyys_4r58khdz(wz%
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
-ALLOWED_HOSTS = ['ams.webinfinitesolutions.com','www.ams.webinfinitesolutions.com']
+ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = ['ams.webinfinitesolutions.com','www.ams.webinfinitesolutions.com']
 
 
 # Application definition
@@ -75,23 +75,23 @@ WSGI_APPLICATION = 'Employee.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#
-#     }
-# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'python_ams_db',
-        'USER': 'pyhton_ams_user',
-        'PASSWORD': 'ams_user_db123',
-        'HOST': 'python-ams.webinfinitesolutions.com',
-        'PORT': '',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'python_ams_db',
+#         'USER': 'pyhton_ams_user',
+#         'PASSWORD': 'ams_user_db123',
+#         'HOST': 'python-ams.webinfinitesolutions.com',
+#         'PORT': '',
+#     }
+# }
 
 
 # Password validation
@@ -123,7 +123,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
