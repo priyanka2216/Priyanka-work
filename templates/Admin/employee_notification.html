@@ -8,7 +8,7 @@
                 {% include 'includes/messages.html' %}
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{% url 'Admin/homepage' %}">Dashboard</a></li>
-                    <li class="breadcrumb-item active">Employees</li>
+                    <li class="breadcrumb-item active">Employees Notification List</li>
                 </ul>
             </div>
             <div class="col-auto text-right float-right ml-auto">
@@ -38,11 +38,11 @@
                                     <td>{{ i.pk }}</td>
                                     <td>
                                         <h2 class="table-avatar">
-                                            <a href="student-details.html" class="avatar avatar-sm mr-2">
+                                            <a href="#" class="avatar avatar-sm mr-2">
                                                 <img class="avatar-img rounded-circle"
                                                     src="/{{ i.admin.profile_pic }}" alt="User Image">
                                             </a>
-                                            <a href="student-details.html">{{ i.admin.first_name }}&nbsp;{{ i.admin.last_name }}</a>
+                                            <a href="#">{{ i.admin.first_name }}&nbsp;{{ i.admin.last_name }}</a>
                                         </h2>
                                     </td>
                                     <td>{{ i.admin.email }}</td>

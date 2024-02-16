@@ -13,7 +13,10 @@
         padding: 8px;
         text-align: center;
     }
-    #logButton {
+    #logButtons {
+        margin: 10px;
+    }
+    #logButtons button {
         padding: 20px;
         background-color: rgb(255, 166, 0);
         color: white;
@@ -25,14 +28,14 @@
 <h1 style="text-align: center;">Employee Attendance</h1>
 <form method="post" action="{% url 'attendance_sheet' %}">
     {% csrf_token %}
-    {% if loggedIn %}
-
-    {% else %}
     <div id="logButtons">
-        <button class="btn btn-primary" id="loginButton" name="action" value="login" >Log In</button>
-        <button class="btn btn-primary" id="logoutButton" name="action" value="logout" style="display: none;">Log Out</button>
+        {% if not loggedIn %}
+            <button class="btn btn-primary" id="loginButton" name="action" value="login">Log In</button>
+        {% endif %}
+        {% if loggedIn %}
+            <button class="btn btn-primary" id="logoutButton" name="action" value="logout">Log Out</button>
+        {% endif %}
     </div>
-    {% endif %}
 </form>
 
 <table id="attendanceSheet">
@@ -55,14 +58,13 @@
 </table>
 
 <script>
-    let loggedIn = {{ loggedIn|yesno:"true,false" }};
+    let isLoggedIn = {{ loggedIn|yesno:"true,false" }};
     const attendanceData = document.getElementById('attendanceData');
     const loginButton = document.getElementById('loginButton');
     const logoutButton = document.getElementById('logoutButton');
 
-    function toggleLogInOut(action) {
+    function updateUI(action) {
         if (action === 'login') {
-            // User is logging in
             const loginTime = new Date().toLocaleTimeString();
             const newRow = document.createElement('tr');
             newRow.innerHTML = `
@@ -73,9 +75,8 @@
             attendanceData.appendChild(newRow);
             loginButton.style.display = 'none';
             logoutButton.style.display = 'block';
-            loggedIn = true;
+            isLoggedIn = true;
         } else if (action === 'logout') {
-            // User is logging out
             const logoutTime = new Date().toLocaleTimeString();
             const lastRow = attendanceData.lastElementChild;
             if (lastRow) {
@@ -83,22 +84,36 @@
             }
             loginButton.style.display = 'block';
             logoutButton.style.display = 'none';
-            loggedIn = false;
+            isLoggedIn = false;
+
+            // Disable buttons after logout
+            loginButton.disabled = true;
+            logoutButton.disabled = true;
         }
     }
-    if (localStorage.getItem('loggedIn')) {
-        // If the user was logged in previously, show the appropriate button
+
+    if (isLoggedIn) {
         loginButton.style.display = 'none';
         logoutButton.style.display = 'block';
     }
+
+    // Check if both login and logout buttons should be disabled
+    const disableButtons = localStorage.getItem('loggedIn') && attendanceData.children.length > 0;
+    loginButton.disabled = disableButtons;
+    logoutButton.disabled = disableButtons;
+
     loginButton.addEventListener('click', function() {
-        toggleLogInOut('login');
-        localStorage.setItem('loggedIn', 'true');
+        if (window.confirm('Are you sure you want to log in?')) {
+            updateUI('login');
+            localStorage.setItem('loggedIn', 'true');
+        }
     });
 
     logoutButton.addEventListener('click', function() {
-        toggleLogInOut('logout');
-        localStorage.removeItem('loggedIn');
+        if (window.confirm('Are you sure you want to log out?')) {
+            updateUI('logout');
+            localStorage.removeItem('loggedIn');
+        }
     });
 </script>
 {% endblock %}

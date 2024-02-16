@@ -24,21 +24,21 @@
                <div class="form-group">
                   <label>First Name:</label>
                   <input type="text" class="form-control" name="first_name"
-                     value="{% for i in employee %}{{i.admin.first_name}}{% endfor %}" >
+                     value="{% for i in employee %}{{i.admin.first_name}}{% endfor %}"  required>
                </div>
             </div>
             <div class="col-sm-9">
                <div class="form-group">
                   <label>Last Name:</label>
                   <input type="text" class="form-control" name="last_name"
-                     value="{% for i in employee %}{{i.admin.last_name}}{% endfor %}" >
+                     value="{% for i in employee %}{{i.admin.last_name}}{% endfor %}" required>
                </div>
             </div>
             <div class="col-sm-9" >
                <div class="form-group">
                   <label>Email:</label>
                   <input type="text" class="form-control"
-                     placeholder="" name="email" value="{% for i in employee %}{{i.admin.email}}{% endfor %}" >
+                     placeholder="" name="email" value="{% for i in employee %}{{i.admin.email}}{% endfor %}" required>
                </div>
             </div>
 
@@ -46,7 +46,7 @@
                <div class="form-group">
                   <label>Username:</label>
                   <input type="text" class="form-control" name="username"
-                         value="{% for i in employee %}{{i.admin.email}}{% endfor %}" >
+                         value="{% for i in employee %}{{i.admin.email}}{% endfor %}" required >
                </div>
             </div>
 
@@ -55,7 +55,7 @@
                   <label>Password:</label>
                   <input type="password" class="form-control"
                      placeholder="fill only if you went to change password" name="password"
-                         >
+                     >
                </div>
             </div>
              <div class="col-sm-9">
@@ -67,7 +67,7 @@
             <div class="col-sm-9">
                 <div class="form-group">
                     <label>Designation:</label>
-                    <select class="form-control" name="designation_id" >
+                    <select class="form-control" name="designation_id" required >
                         <option value="">Select Designation</option>
                         {% for i in designation_list %}  <!-- Updated variable name -->
                             <option value="{{i.id}}">{{i.name}}</option>

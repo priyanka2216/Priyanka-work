@@ -5,6 +5,13 @@ from django.contrib import messages
 from django.db.models import Count
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.paginator import Paginator
+from .models import Attendance
+from django.contrib import messages
+from datetime import datetime
+from django.core.validators import EmailValidator
+from django.core.exceptions import ValidationError
+# from .views import role_required
+
 
 @login_required(login_url='/')
 def Home(request):
@@ -25,56 +32,80 @@ def Home(request):
     return render(request, 'Admin/home.html',context)
 
 @login_required(login_url='/')
+@login_required(login_url='/')
 def Add_Employee(request):
-    designation_list = Designation.objects.all()  # Rename the variable to avoid confusion
+    designation_list = Designation.objects.all()
+
+    # Initialize form data with empty values
+    form_data = {
+        'first_name': '',
+        'last_name': '',
+        'email': '',
+        'username': '',
+        'password': '',
+        'address': '',
+        'designation_id': '',
+        'gender': '',
+    }
+
     if request.method == "POST":
         profile_pic = request.FILES.get('profile_pic')
-        first_name = request.POST.get('first_name')
-        last_name = request.POST.get('last_name')
-        email = request.POST.get('email')
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        address = request.POST.get('address')
-        designation_id = request.POST.get('designation_id')
-        gender = request.POST.get('gender')
-        print(designation_id)
+        form_data['first_name'] = request.POST.get('first_name')
+        form_data['last_name'] = request.POST.get('last_name')
+        form_data['email'] = request.POST.get('email')
+        form_data['username'] = request.POST.get('username')
+        form_data['password'] = request.POST.get('password')
+        form_data['address'] = request.POST.get('address')
+        form_data['designation_id'] = request.POST.get('designation_id')
+        form_data['gender'] = request.POST.get('gender')
+        print(form_data['designation_id'])
 
-        if CustomUser.objects.filter(email=email).exists():
+        # Validate email
+        email_validator = EmailValidator(message="Enter a valid email address.")
+        try:
+            email_validator(form_data['email'])
+        except ValidationError as e:
+            messages.warning(request, str(e))
+
+        # Validate password
+        if len(form_data['password']) < 6:
+            messages.warning(request, "Password must be at least 6 characters.")
+
+        if CustomUser.objects.filter(email=form_data['email']).exists():
             messages.warning(request, "Email Is Already Taken")
-            return redirect('add_employeepage')
 
-        if CustomUser.objects.filter(username=username).exists():
+        if CustomUser.objects.filter(username=form_data['username']).exists():
             messages.warning(request, "Username Is Already Taken")
-            return redirect('add_employeepage')
-        else:
-                user = CustomUser(
-                    first_name = first_name,
-                    last_name = last_name,
-                    username = username,
-                    email = email,
-                    profile_pic = profile_pic,
-                    user_type = 2,
-                )
-                user.set_password(password)
-                user.save()
-                
-                selected_designation = Designation.objects.get(id=designation_id)
-                
-                employee = Employee(
-                    admin = user,
-                    address = address,
-                    designation_id = selected_designation,  # Assign the selected designation instance
-                    gender = gender,
-                )
-                employee.save()
-                messages.success(request, user.first_name + " " +user.last_name + " are successfully add!!")
-                return redirect('add_employeepage')
+
+        # If there are no validation issues, proceed with creating the user and employee
+        if not messages.get_messages(request):
+            user = CustomUser(
+                first_name=form_data['first_name'],
+                last_name=form_data['last_name'],
+                username=form_data['username'],
+                email=form_data['email'],
+                profile_pic=profile_pic,
+                user_type=2,
+            )
+            user.set_password(form_data['password'])
+            user.save()
+
+            selected_designation = Designation.objects.get(id=form_data['designation_id'])
+
+            employee = Employee(
+                admin=user,
+                address=form_data['address'],
+                designation_id=selected_designation,
+                gender=form_data['gender'],
+            )
+            employee.save()
+            messages.success(request, f"{user.first_name} {user.last_name} is successfully added!")
 
     context = {
-        'designation_list': designation_list,  # Update the context variable name
+        'designation_list': designation_list,
+        'form_data': form_data,
     }
     return render(request, "Admin/add_employee.html", context)
-
 #fetch all data in employee dashbord
 @login_required(login_url='/')
 def View_Employee(request):
@@ -100,42 +131,66 @@ def Edit_Employee(request,id):
 
 @login_required(login_url='/')
 def Update_Employee(request):
-    #get a post request value
-    if request.method =="POST":
+    # get a post request value
+    if request.method == "POST":
         employee_id = request.POST.get('employee_id')
-        print(employee_id)
-        profile_pic = request.FILES.get('profile_pic')
-        first_name = request.POST.get('first_name')
-        last_name = request.POST.get('last_name')
-        email = request.POST.get('email')
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        address = request.POST.get('address')
-        designation_id = request.POST.get('designation_id')
-        gender = request.POST.get('gender')
-        # this id use for update data
-        user=CustomUser.objects.get(id=employee_id)
-        # this user.profile_pic = profile_pic use for save data
-        user.first_name = first_name
-        user.last_name = last_name
-        user.email = email
-        user.username = username
-        if password != None and password != '':
-            user.set_password(password)
 
-        if profile_pic != None and profile_pic != '':
-            user.profile_pic = profile_pic
-        user.save()
+        # Check if employee_id is not empty
+        if employee_id is not None and employee_id != '':
+            try:
+                # Convert employee_id to integer before querying the database
+                employee_id = int(employee_id)
 
-        employee =Employee.objects.get(admin=employee_id)
-        employee.address = address
-        employee.gender = gender
-        designation = Designation.objects.get(id =designation_id)
-        employee.designation_id = designation
-        employee.save()
-        messages.success(request,"Record Are Successfully updated!!")
-        return redirect('view_employeepage')
-    return render(request,"Admin/edit_employee.html")
+                print(employee_id)
+                profile_pic = request.FILES.get('profile_pic')
+                first_name = request.POST.get('first_name')
+                last_name = request.POST.get('last_name')
+                email = request.POST.get('email')
+                username = request.POST.get('username')
+                password = request.POST.get('password')
+                address = request.POST.get('address')
+                designation_id = request.POST.get('designation_id')
+                gender = request.POST.get('gender')
+
+                # Update data if user with given employee_id exists
+                user = CustomUser.objects.get(id=employee_id)
+                user.first_name = first_name
+                user.last_name = last_name
+                user.email = email
+                user.username = username
+
+                if password is not None and password != '':
+                    user.set_password(password)
+
+                if profile_pic is not None and profile_pic != '':
+                    user.profile_pic = profile_pic
+
+                user.save()
+
+                employee = Employee.objects.get(admin=employee_id)
+                employee.address = address
+                employee.gender = gender
+                designation = Designation.objects.get(id=designation_id)
+                employee.designation_id = designation
+                employee.save()
+
+                messages.success(request, "Record Are Successfully updated!!")
+                return redirect('view_employeepage')
+
+            except ValueError:
+                # Handle the case where the conversion to integer fails
+                messages.error(request, "Invalid employee_id format.")
+
+            except CustomUser.DoesNotExist:
+                # Handle the case where the user with given employee_id does not exist
+                messages.error(request, "User not found for the given employee_id.")
+
+        else:
+            # Handle the case where employee_id is empty
+            messages.error(request, "Invalid employee_id.")
+
+    return render(request, "Admin/edit_employee.html")
+
 
 def Delete_Employee(request,admin):
     employee =CustomUser.objects.get(id=admin)
@@ -295,31 +350,41 @@ def Employee_Disapprove_leave(request,id):
     return redirect('leave_view')
 
 def Admin_Attendance_View(request):
-    admin_attendance = Attendance.objects.all().order_by('-id')[0:5]
+    admin_attendance = Attendance.objects.all().order_by('-id')[0:10]
     context={
 
         'admin_attendance':admin_attendance
     }
     return render(request, 'Admin/attendance_view.html',context)
 
-def Delete_Attendance(request , id):
-    attendance = Attendance.objects.get(id=id)
-    attendance.delete()
-    messages.success(request, "Record Successfully Deleted!!")
+from django.shortcuts import get_object_or_404
+
+def Delete_Attendance(request, id):
+    try:
+        attendance = get_object_or_404(Attendance, id=id)
+        attendance.delete()
+        messages.success(request, "Record Successfully Deleted!!")
+    except Attendance.DoesNotExist:
+        messages.error(request, "Attendance record not found.")
+    
     return redirect('attendance_view')
-
-
-
-from .models import Attendance
-from django.contrib import messages
 
 
 def Edit_Attendance(request, id):
     # Retrieve the attendance record based on the provided ID
     attendance = get_object_or_404(Attendance, id=id)
+    
     if request.method == "POST":
-
-        date = request.POST.get('date')
+        date_str = request.POST.get('date')
+        
+        try:
+            # Parse the date string to validate its format
+            date = datetime.strptime(date_str, '%Y-%m-%d').date()
+        except ValueError:
+            # Handle the case where the date format is incorrect
+            messages.error(request, "All fields are required.")
+            return render(request, "Admin/edit_attendance.html", {'attendance': attendance})
+        
         login_time = request.POST.get('login_time')
         logout_time = request.POST.get('logout_time')
 
@@ -330,6 +395,7 @@ def Edit_Attendance(request, id):
 
         messages.success(request, "Record Has Been Successfully Updated")
         return redirect("attendance_view")
+    
     return render(request, "Admin/edit_attendance.html", {'attendance': attendance})
 
 # def Update_Attendance(request):
@@ -349,4 +415,3 @@ def Edit_Attendance(request, id):
 #         messages.success(request, "Record Has Been Successfully Updated")
 #         return redirect("attendance_view")
 #     return render(request,"Admin/edit_attendance.html")
-
