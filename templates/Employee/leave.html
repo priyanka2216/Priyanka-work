@@ -4,11 +4,12 @@
     <div class="page-header">
         <div class="row align-items-center">
             <div class="col">
-                <h3 class="page-title">Apply Leave</h3>
                 <ul class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
-                    <li class="breadcrumb-item active">Employees</li>
+                    <li class="breadcrumb-item"><a href="{% url 'employee/homepage' %}">Dashboard</a></li>
+                    <li class="breadcrumb-item active"><a href="{% url 'attendance_sheet' %}">Attendance sheet</a></li>
                 </ul>
+                <h3 class="page-title" style="text-align: center;">Apply For Leave</h3>
+               
             </div>
             <div class="col-auto text-right float-right ml-auto">
                 <button class="btn btn-outline-primary mr-2" data-toggle="modal" data-target=".bd-example-modal-lg" type="button">Leave History</button>

@@ -11,10 +11,7 @@
                         <a href="{% url 'Admin/homepage' %}"><i class="fas fa-home"></i> <span class="active" style="font-size: 18px;"> Dashboard </span> <span class="menu-arrow"></span></a>
                      </li>
 
-                      <!-- <ul>
-                           <li><a href="{% url 'Admin/homepage' %}"style=" font-size: 18px ;">Employee Dashboard</a></li>
-                        </ul> -->
-                    
+
                      <li class="submenu ">
                         <a href="{% url 'Admin/homepage' %}"><i class="fas fa-user-graduate"></i> <span style=" font-size: 18px;"> Employee</span> <span class="menu-arrow"></span></a>
                         <ul>
@@ -56,11 +53,11 @@
                         <a href="{% url 'dologout_page' %}"><i class="fas fa-sign-out-alt" ></i> <span class="active" style=" font-size: 18px;" >Logout</span></a>
                      </li>
                      {% else %}
-                      <li class="menu-title active">
+                     <li class="menu-title active">
                         <span style="font-weight: bold; color: rgb(31, 214, 31); font-size: 20px;">Main Menu</span>
                      </li>
                      <li class="">
-                        <a href="{% url 'employee/homepage' %}"><i class="fas fa-holly-berry"></i> <span style=" font-size: 18px;" class="active">Dashboard</span></a>
+                        <a href="{% url 'employee/homepage' %}"><i class="fas fa-home"></i> <span style=" font-size: 18px;" class="active">Dashboard</span></a>
                      </li>
 
                      <li class="">

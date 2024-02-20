@@ -7,9 +7,17 @@
          <form method="post" action="{% url 'add_designationpage' %}">
             {% csrf_token %}
             <div class="col-12">
+               <nav aria-label="breadcrumb">
+                  <ol class="breadcrumb">
+                     <li class="breadcrumb-item"><a href="{% url 'Admin/homepage' %}">Dashboard</a></li>
+                     <li class="breadcrumb-item active"><a href="{% url 'view_designationpage' %}">View Designation</a></li>
+                  </ol>
+                </nav>
                <h3 class="form-title my-3"><span>Add Designation</span></h3>
+
             </div>
             {% include 'includes/messages.html' %}
+
             <div class="col-sm-9">
                <div class="form-group">
                   <label>Designation Name:</label>

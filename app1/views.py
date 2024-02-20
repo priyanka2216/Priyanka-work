@@ -11,8 +11,17 @@ def BASE(request):
 
 
 def Login(request):
+    # Check if the user is already logged in
     if request.session.get('is_logged_in'):
-        return redirect('Admin/homepage')  # Redirect to the home page if already logged in
+        user_role = request.session.get('user_role')
+
+        # Redirect based on the user's role
+        if user_role == 1:
+            return redirect('Admin/homepage')
+        elif user_role == 2:
+            return redirect('Employee/home')
+
+    # Continue with rendering the login page
     return render(request, 'login.html')
 
 
@@ -47,7 +56,17 @@ def doLogout(request):
 
 @login_required(login_url='login_page')
 def redirectToHome(request):
-    return redirect('Admin/homepage')
+    # Get the user's role
+    user_role = request.user.user_type
+
+    # Redirect based on the user's role
+    if user_role == '1':
+        return redirect('Admin/homepage')
+    elif user_role == '2':
+        return redirect('Employee/home')
+
+    # Handle other cases or redirect to a default page
+    return redirect('default-home')
 
 #Create function for update Profile
 def PROFILE(request):

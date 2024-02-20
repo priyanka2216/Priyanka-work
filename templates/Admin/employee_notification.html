@@ -4,12 +4,13 @@
     <div class="page-header">
         <div class="row align-items-center">
             <div class="col">
-                <h3 class="page-title">List Of Employee</h3>
-                {% include 'includes/messages.html' %}
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{% url 'Admin/homepage' %}">Dashboard</a></li>
                     <li class="breadcrumb-item active">Employees Notification List</li>
                 </ul>
+                <h3 class="page-title" style="text-align: center;">List Of Employee</h3>
+                {% include 'includes/messages.html' %}
+                
             </div>
             <div class="col-auto text-right float-right ml-auto">
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">

@@ -7,6 +7,10 @@
          <form method="post" action="{% url 'add_session' %}">
             {% csrf_token %}
             <div class="col-12">
+               <ul class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="{% url 'Admin/homepage' %}">Dashboard</a></li>
+                  <li class="breadcrumb-item active"><a href="{% url 'view_session' %}">View Session</a></li>
+              </ul>
                <h1 class="form-title my-3"><span>Add Session</span></h1>
 
             </div>

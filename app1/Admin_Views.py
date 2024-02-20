@@ -10,10 +10,12 @@ from django.contrib import messages
 from datetime import datetime
 from django.core.validators import EmailValidator
 from django.core.exceptions import ValidationError
-# from .views import role_required
+from .decorators import admin_required
+from django.contrib.auth.decorators import login_required
 
 
 @login_required(login_url='/')
+@admin_required
 def Home(request):
     employee_count = Employee.objects.all().count()
     designation_count = Designation.objects.all().count()
@@ -32,7 +34,7 @@ def Home(request):
     return render(request, 'Admin/home.html',context)
 
 @login_required(login_url='/')
-@login_required(login_url='/')
+@admin_required
 def Add_Employee(request):
     designation_list = Designation.objects.all()
 
@@ -108,6 +110,7 @@ def Add_Employee(request):
     return render(request, "Admin/add_employee.html", context)
 #fetch all data in employee dashbord
 @login_required(login_url='/')
+@admin_required
 def View_Employee(request):
         employee_list = Employee.objects.all().order_by('-id')
         items_per_page = 10
@@ -120,7 +123,10 @@ def View_Employee(request):
         return render(request, "Admin/view_employee.html", context)
 
 # create function for edit  Employee Records
+@login_required(login_url='/')
+@admin_required
 def Edit_Employee(request,id):
+    
     employee =Employee.objects.filter(id=id)
     designation_list = Designation.objects.all()
     context = {
@@ -130,6 +136,7 @@ def Edit_Employee(request,id):
     return render(request,"Admin/edit_employee.html",context)
 
 @login_required(login_url='/')
+@admin_required
 def Update_Employee(request):
     # get a post request value
     if request.method == "POST":
@@ -199,6 +206,7 @@ def Delete_Employee(request,admin):
     return redirect('view_employeepage')
 
 @login_required(login_url='/')
+@admin_required
 def Add_Designation(request):
     if request.method == "POST":
         designation_name = request.POST.get('designation_name')
@@ -210,7 +218,8 @@ def Add_Designation(request):
         return redirect('add_designationpage')
     return render(request, "Admin/add_designation.html")
 # ***********************************
-
+@login_required(login_url='/')
+@admin_required
 def View_Designation(request):
     designation_list = Designation.objects.all().order_by('-id')
     items_per_page = 10
@@ -222,6 +231,8 @@ def View_Designation(request):
     }
     return render(request, "Admin/view_designation.html", context)
 
+@login_required(login_url='/')
+@admin_required
 def Edit_Designation(request,id):
     designation = Designation.objects.get(id = id)
     context = {
@@ -229,7 +240,8 @@ def Edit_Designation(request,id):
     }
     return render(request, "Admin/edit_designation.html", context)
 
-
+@login_required(login_url='/')
+@admin_required
 def Update_Designation(request, id):
     if request.method == "POST":
         name = request.POST.get('name')
@@ -242,6 +254,8 @@ def Update_Designation(request, id):
         return redirect('view_designationpage')
     return render(request, "Admin/edit_designation.html")
 
+@login_required(login_url='/')
+@admin_required
 def Delete_Designation(request, id):
     designation = Designation.objects.get(id=id)
     designation.delete()
@@ -249,6 +263,7 @@ def Delete_Designation(request, id):
     return redirect('view_designationpage')
 
 @login_required(login_url='/')
+@admin_required
 def Add_Session(request):
     if request.method == "POST":
         session_year_start = request.POST.get('session_year_start')
@@ -264,6 +279,7 @@ def Add_Session(request):
     return render(request,  "Admin/add_session.html")
 
 @login_required(login_url='/')
+@admin_required
 def View_Session(request):
     session = Session_year.objects.all()
     context = {
@@ -271,7 +287,8 @@ def View_Session(request):
     }
     return render(request, 'Admin/view_session.html', context)
 
-
+@login_required(login_url='/')
+@admin_required
 def Edit_Session(request, id):
     session = Session_year.objects.filter(id=id)
     context={
@@ -279,7 +296,8 @@ def Edit_Session(request, id):
         }
     return render(request, 'Admin/edit_session.html', context)
 
-
+@login_required(login_url='/')
+@admin_required
 def Update_Session(request):
     if request.method == "POST":
         session_id = request.POST.get('session_id')
@@ -303,6 +321,7 @@ def Delete_Session(request,id):
     return redirect('view_session')
 
 @login_required(login_url='/')
+@admin_required
 def Employee_Send_Notification(request):
     employee = Employee.objects.all()
     #.order_by use for show message serial wise [0:5] use for leatest 5 message show onle
@@ -314,6 +333,7 @@ def Employee_Send_Notification(request):
     return render(request,"Admin/employee_notification.html", context)
 
 @login_required(login_url='/')
+@admin_required
 def Employee_Save_Notification(request):
     if request.method == "POST":
         employee_id = request.POST.get('employee_id')
@@ -329,6 +349,7 @@ def Employee_Save_Notification(request):
         return redirect('employee_send_notification')
 
 @login_required(login_url='/')
+@admin_required
 def Employee_Leave_View(request):
     employee_leave = Employee_leave.objects.all()
     context = {
@@ -336,26 +357,37 @@ def Employee_Leave_View(request):
     }
     return render(request, "Admin/employee_leave.html", context)
 
-
+@login_required(login_url='/')
+@admin_required
 def Employee_Approve_leave(request, id):
     leave = Employee_leave.objects.get(id=id)
     leave.status = 1
     leave.save()
     return redirect('leave_view')
 
+@login_required(login_url='/')
+@admin_required
 def Employee_Disapprove_leave(request,id):
     leave = Employee_leave.objects.get(id=id)
     leave.status = 2
     leave.save()
     return redirect('leave_view')
 
+@login_required(login_url='/')
+@admin_required
 def Admin_Attendance_View(request):
-    admin_attendance = Attendance.objects.all().order_by('-id')[0:10]
-    context={
+    admin_attendance = Attendance.objects.all().order_by('-id')
+    
+    # Pagination
+    items_per_page = 10
+    page_number = request.GET.get('page')
+    paginator = Paginator(admin_attendance, items_per_page)
+    page = paginator.get_page(page_number)
 
-        'admin_attendance':admin_attendance
+    context = {
+        'admin_attendance': page,
     }
-    return render(request, 'Admin/attendance_view.html',context)
+    return render(request, 'Admin/attendance_view.html', context)
 
 from django.shortcuts import get_object_or_404
 
@@ -370,6 +402,8 @@ def Delete_Attendance(request, id):
     return redirect('attendance_view')
 
 
+@login_required(login_url='/')
+@admin_required
 def Edit_Attendance(request, id):
     # Retrieve the attendance record based on the provided ID
     attendance = get_object_or_404(Attendance, id=id)

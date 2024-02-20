@@ -5,7 +5,12 @@
     <div class="page-header">
         <div class="row align-items-center">
             <div class="col">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'Admin/homepage' %}">Dashboard</a></li>
+                    <li class="breadcrumb-item active"><a href="{% url 'view_session' %}">View Session</a></li>
+                </ul>
                 <h3 class="page-title text-center">List Of Session</h3>
+                
                 {% include 'includes/messages.html' %}
             </div>
         </div>
