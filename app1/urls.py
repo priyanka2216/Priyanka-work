@@ -55,5 +55,4 @@ urlpatterns = [
     path('Emplyee/employee_save_leave', Employee_Views.Employee_Save_Leave, name="employee_leave_save"),
     path('Employee/Attendance/Sheet', Employee_Views.Attendance_Sheet, name="attendance_sheet"),
 
-
 ]+ static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

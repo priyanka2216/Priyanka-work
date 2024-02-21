@@ -65,6 +65,7 @@ class Employee_leave(models.Model):
 class Attendance(models.Model):
         employee_id = models.ForeignKey(Employee, on_delete=models.CASCADE)
         date = models.DateField()
+        status = models.CharField(max_length=255, default='some_default_value')
         login_time = models.TimeField()
         logout_time = models.TimeField(null=True, blank=True)
 
