@@ -39,11 +39,11 @@
                   <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
                      {% if user.profile_pic ==  "" %}
                      <span class="user-img">
-                     <img class="rounded-circle" src="{% static 'assets/img/no-image.jpg' %}" width="31" alt="Priyanka">
+                     <img class="rounded-circle" src="{% static 'assets/img/no-image.jpg' %}" width="31">
                   </span>
                      {% else %}
                   <span class="user-img">
-                     <img class="rounded-circle" src="/{{user.profile_pic}}" width="31" alt="Priyanka">
+                     <img class="rounded-circle" src="/{{user.profile_pic}}" width="31">
                   </span>
                        {% endif %}
                   </a>
@@ -51,9 +51,9 @@
                      <div class="user-header">
                         <div class="avatar avatar-sm">
                            {% if user.profile_pic ==  "" %}
-                           <img src="{% static 'assets/img/no-image.jpg' %}" alt="User Image" class="avatar-img rounded-circle">
+                           <img src="{% static 'assets/img/no-image.jpg' %}" alt="" class="avatar-img rounded-circle">
                            {% else %}
-                           <img src="/{{user.profile_pic}}" alt="User Image" class="avatar-img rounded-circle">
+                           <img src="/{{user.profile_pic}}" alt="" class="avatar-img rounded-circle">
                             {% endif %}
                         </div>
                         <div class="user-text">
