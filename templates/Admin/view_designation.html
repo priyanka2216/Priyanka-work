@@ -7,10 +7,17 @@
     <div class="page-header">
       <div class="row align-items-center">
         <div class="col">
-          <ul class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{% url 'Admin/homepage' %}">Dashboard</a></li>
-            <li class="breadcrumb-item active">View Designation</li>
-          </ul>
+
+          <div style="height: 40px;">
+            <ul style="margin: 0; padding: 0; list-style: none;">
+                <li style="display: inline;">
+                    <a href="{% url 'Admin/homepage' %}" style="text-decoration: none; color: #007bff;">Dashboard</a>
+                </li>
+                <li style="display: inline; margin-left: 5px; margin-right: 5px; color: #868e96;">/</li>
+                <li style="display: inline; ">View Designation</li>
+            </ul>
+        </div>
+          
           <h3 class="page-title text-center">List Of Designation</h3>
           
           {% include 'includes/messages.html' %}
@@ -55,31 +62,6 @@
         </div>
       </div>
     </div>
-
-    <!-- Display pagination controls -->
-    <div class="pagination">
-      <span class="step-links">
-        {% if designation.has_previous %}
-          <a href="?page=1">&laquo; first</a>
-          <a href="?page={{ designation.previous_page_number }}">previous</a>
-        {% endif %}
-        <span class="current-page">{{ designation.number }}</span>
-        {% if designation.has_next %}
-          <a href="?page={{ designation.next_page_number }}">next</a>
-          <a href="?page={{ designation.paginator.num_pages }}">last &raquo;</a>
-        {% endif %}
-      </span>
-    </div>
   </div>
 
-  <!-- Add DataTables CSS and JS files -->
-  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
-  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
-
-  <!-- Initialize DataTable -->
-  <script>
-    $(document).ready(function () {
-      $('#table_id').DataTable();
-    });
-  </script>
 {% endblock %}

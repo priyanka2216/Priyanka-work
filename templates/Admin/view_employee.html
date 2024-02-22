@@ -4,11 +4,18 @@
     <div class="page-header">
         <div class="row align-items-center">
             <div class="col">
+
+                <div style="height: 40px;">
+                    <ul style="margin: 0; padding: 0; list-style: none;">
+                        <li style="display: inline;">
+                            <a href="{% url 'Admin/homepage' %}" style="text-decoration: none; color: #007bff;">Dashboard</a>
+                        </li>
+                        <li style="display: inline; margin-left: 5px; margin-right: 5px; color: #868e96;">/</li>
+                        <li style="display: inline; ">View Employees</li>
+                    </ul>
+                </div>
+
                 <h3 class="page-title" style="text-align: center;">List Of Employee</h3>
-                <ul class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{% url 'Admin/homepage' %}">Dashboard</a></li>
-                    <li class="breadcrumb-item active">Employees</li>
-                </ul>
                 {% include 'includes/messages.html' %}
                 
             </div>
@@ -72,7 +79,7 @@
     </div>
 
     <!-- Display pagination controls -->
-    <div class="pagination">
+    <!-- <div class="pagination">
         <span class="step-links">
             {% if employee.has_previous %}
                 <a href="?page=1">&laquo; first</a>
@@ -84,6 +91,6 @@
                 <a href="?page={{ employee.paginator.num_pages }}">last &raquo;</a>
             {% endif %}
         </span>
-    </div>
+    </div> -->
 </div>
 {% endblock %}

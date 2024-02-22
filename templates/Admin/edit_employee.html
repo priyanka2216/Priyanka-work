@@ -7,6 +7,15 @@
          <form method="post"  action="{% url 'update_employeepage' %}" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="col-12">
+               <div style="height: 40px;">
+                  <ul style="margin: 0; padding: 0; list-style: none;">
+                      <li style="display: inline;">
+                          <a href="{% url 'Admin/homepage' %}" style="text-decoration: none; color: #007bff;">Dashboard</a>
+                      </li>
+                      <li style="display: inline; margin-left: 5px; margin-right: 5px; color: #868e96;">/</li>
+                      <li style="display: inline; color: #007bff; "><a href="{% url 'view_employeepage' %}">View Employee</a></li>
+                  </ul>
+              </div>
                <h3 class="form-title my-3" ><span>EDIT EMPLOYEE</span></h3>
             </div>
 

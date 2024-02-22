@@ -4,12 +4,12 @@
     <div class="page-header">
         <div class="row align-items-center">
             <div class="col">
-                <ul class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{% url 'employee/homepage' %}">Dashboard</a></li>
-                    <li class="breadcrumb-item">Show All Notifications</li>
-  
+                <ul class="breadcrumb" style="margin-top: 10px; padding: 8px; background-color: #ffffff;">
+                    <li class="breadcrumb-item active"><a href="{% url 'employee/homepage' %}" style="text-decoration: none; color: #007bff;">Dashboard</a></li>
+                    <li class="breadcrumb-item active">Notification</li>
                 </ul>
-                <h3 class="page-title" style="text-align: center;">Notification</h3>
+
+                <h3 class="page-title" style="text-align: center;">Show All Notification</h3>
             
                 {% include 'includes/messages.html' %}
             </div>

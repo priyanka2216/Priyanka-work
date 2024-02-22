@@ -47,12 +47,14 @@ def Employee_Leave(request):
         return render(request, 'Employee/leave.html', context)
 
 @login_required(login_url='/')
+@login_required(login_url='/')
 def Employee_Save_Leave(request):
     if request.method == "POST":
         leave_type = request.POST.get('leave_type')
         leave_date = request.POST.get('leave_date')
         message = request.POST.get('message')
 
+        print("Leave Date:", leave_date)  # Add this line to print the leave_date
         employee = Employee.objects.get(admin=request.user.id)
         leave = Employee_leave(
             employee_id=employee,
@@ -60,9 +62,10 @@ def Employee_Save_Leave(request):
             message=message,
         )
         leave.save()
+        print(leave)
         messages.success(request, "Employee Leave Successfully Submit!!")
         return redirect('apply_leave')
-
+    
 @login_required(login_url='/')
 def Attendance_Sheet(request):
     employee_id = request.user.employee
@@ -101,6 +104,7 @@ def Attendance_Sheet(request):
     employee_attendance = Attendance.objects.filter(employee_id=employee_id)
 
     return render(request, 'Employee/attendance_sheet.html', {'employee_attendance': employee_attendance, 'loggedIn': has_logged_in_today})
+
 
 #***************************
 # def Attendance_Sheet(request):

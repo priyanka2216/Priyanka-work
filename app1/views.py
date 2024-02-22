@@ -79,34 +79,44 @@ def PROFILE(request):
 #Create function for fetch data in database
 def PROFILE_UPDATE(request):
     if request.method == "POST":
-        profile_pic = request.FILES.get('profile_pic')
-        first_name = request.POST.get('first_name')
-        last_name = request.POST.get('last_name')
-        email = request.POST.get('email')
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        print(profile_pic)
         try:
-            # this code for get id
             customuser = CustomUser.objects.get(id=request.user.id)
+            # Get the existing data
+            existing_first_name = customuser.first_name
+            existing_last_name = customuser.last_name
+            existing_email = customuser.email
+            existing_username = customuser.username
+            existing_password = customuser.password  # Assuming password is stored securely
+
+            # Get the updated data from the form
+            first_name = request.POST.get('first_name', existing_first_name)
+            last_name = request.POST.get('last_name', existing_last_name)
+            email = request.POST.get('email', existing_email)
+            username = request.POST.get('username', existing_username)
+            password = request.POST.get('password', existing_password)
+
+            profile_pic = request.FILES.get('profile_pic')
+
+            # Update the fields if they are not None or empty
             customuser.first_name = first_name
             customuser.last_name = last_name
-            customuser.profile_pic = profile_pic
+            customuser.email = email
+            customuser.username = username
 
-
-
-            if password != None and password != '':
+            if password and password != existing_password:
                 customuser.set_password(password)
 
-            if profile_pic != None and profile_pic != '':
+            if profile_pic:
                 customuser.profile_pic = profile_pic
 
             customuser.save()
-            messages.success(request, "Your Profile Updtaed Successfull")
+            messages.success(request, "Your Profile Updated Successfully")
             return redirect('profile_page')
 
-        except:
-            messages.error(request, "Your Profile Updated Filed!!")
+        except CustomUser.DoesNotExist:
+            messages.error(request, "User not found.")
+        except Exception as e:
+            messages.error(request, f"Error updating profile: {str(e)}")
 
     return render(request, 'profile.html')
 

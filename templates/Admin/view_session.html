@@ -5,10 +5,16 @@
     <div class="page-header">
         <div class="row align-items-center">
             <div class="col">
-                <ul class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{% url 'Admin/homepage' %}">Dashboard</a></li>
-                    <li class="breadcrumb-item active"><a href="{% url 'view_session' %}">View Session</a></li>
-                </ul>
+                <div style="height: 40px;">
+                    <ul style="margin: 0; padding: 0; list-style: none;">
+                        <li style="display: inline;">
+                            <a href="{% url 'Admin/homepage' %}" style="text-decoration: none; color: #007bff;">Dashboard</a>
+                        </li>
+                        <li style="display: inline; margin-left: 5px; margin-right: 5px; color: #868e96;">/</li>
+                        <li style="display: inline; ">View Session</li>
+                    </ul>
+                </div>
+
                 <h3 class="page-title text-center">List Of Session</h3>
                 
                 {% include 'includes/messages.html' %}

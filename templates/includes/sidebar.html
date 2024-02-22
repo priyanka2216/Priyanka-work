@@ -42,7 +42,7 @@
                      </li>
 
                      <li class="">
-                          <a href="{% url 'leave_view' %}"><i class="fas fa-table"></i> <span class="active"  style="font-size: 18px;"> Employee Leave Status </span> <span class="menu-arrow"></span></a>
+                          <a href="{% url 'leave_view' %}"><i class="fas fa-table"></i> <span class="active"  style="font-size: 18px;"> Employee Leave  </span> <span class="menu-arrow"></span></a>
                      </li>
 
                      <li class="">
@@ -53,28 +53,43 @@
                         <a href="{% url 'dologout_page' %}"><i class="fas fa-sign-out-alt" ></i> <span class="active" style=" font-size: 18px;" >Logout</span></a>
                      </li>
                      {% else %}
-                     <li class="menu-title active">
-                        <span style="font-weight: bold; color: rgb(31, 214, 31); font-size: 20px;">Main Menu</span>
+                     <li class="menu-title">
+                        <span style=" font-size: 20px;">Main Menu</span>
                      </li>
-                     <li class="">
-                        <a href="{% url 'employee/homepage' %}"><i class="fas fa-home"></i> <span style=" font-size: 18px;" class="active">Dashboard</span></a>
-                     </li>
-
-                     <li class="">
-                        <a href="{% url 'notification' %}"><i class="fas fa-bell"></i> <span style=" font-size: 18px;" class="active">Notification</span></a>
-                     </li>
-
-                      <li class="">
-                        <a href="{% url 'apply_leave' %}"><i class="fas fa-envelope-open"></i> <span style="font-size: 18px;" class="active">Apply For Leave</span></a>
-                     </li>
-
-                     <li class="">
-                        <a href="{% url 'attendance_sheet'%}"><i class="fas fa-table"></i> <span style=" font-size: 18px;" class="active">Attendance Sheet</span></a>
-                     </li>
-
-                     <li class="">
-                        <a href="{% url 'dologout_page' %}"><i class="fas fa-sign-out-alt"></i> <span style=" font-size: 18px;" class="active">Logout</span></a>
-                     </li>
+                    <li class="" style="list-style: none; margin-bottom: 10px;">
+                        <a href="{% url 'employee/homepage' %}">
+                            <i class="fas fa-home" style="margin-right: 10px;"></i> 
+                            <span style="font-size: 18px;" class="active">Dashboard</span>
+                        </a>
+                    </li>
+                    
+                    <li class="" style="list-style: none; margin-bottom: 10px;">
+                        <a href="{% url 'notification' %}">
+                            <i class="fas fa-bell" style="margin-right: 10px;"></i> 
+                            <span style="font-size: 18px;" class="active">Notification</span>
+                        </a>
+                    </li>
+                    
+                    <li class="" style="list-style: none; margin-bottom: 10px;">
+                        <a href="{% url 'apply_leave' %}">
+                            <i class="fas fa-envelope-open" style="margin-right: 10px;"></i> 
+                            <span style="font-size: 18px;" class="active">Apply For Leave</span>
+                        </a>
+                    </li>
+                    
+                    <li class="" style="list-style: none; margin-bottom: 10px;">
+                        <a href="{% url 'attendance_sheet'%}">
+                            <i class="fas fa-table" style="margin-right: 10px;"></i> 
+                            <span style="font-size: 18px;" class="active">Attendance Sheet</span>
+                        </a>
+                    </li>
+                    
+                    <li class="" style="list-style: none; margin-bottom: 10px;">
+                        <a href="{% url 'dologout_page' %}">
+                            <i class="fas fa-sign-out-alt" style="margin-right: 10px;"></i> 
+                            <span style="font-size: 18px;" class="active">Logout</span>
+                        </a>
+                    </li>
                   </ul>
                   {% endif %}
               </div>

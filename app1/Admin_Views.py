@@ -113,12 +113,12 @@ def Add_Employee(request):
 @admin_required
 def View_Employee(request):
         employee_list = Employee.objects.all().order_by('-id')
-        items_per_page = 10
-        page_number = request.GET.get('page')
-        paginator = Paginator(employee_list, items_per_page)
-        page = paginator.get_page(page_number)
+        # items_per_page = 10
+        # page_number = request.GET.get('page')
+        # paginator = Paginator(employee_list, items_per_page)
+        # page = paginator.get_page(page_number)
         context = {
-            'employee': page,
+            'employee': employee_list,
         }
         return render(request, "Admin/view_employee.html", context)
 
@@ -222,12 +222,12 @@ def Add_Designation(request):
 @admin_required
 def View_Designation(request):
     designation_list = Designation.objects.all().order_by('-id')
-    items_per_page = 10
-    page_number = request.GET.get('page')
-    paginator = Paginator(designation_list, items_per_page)
-    page = paginator.get_page(page_number)
+    # items_per_page = 10
+    # page_number = request.GET.get('page')
+    # paginator = Paginator(designation_list, items_per_page)
+    # page = paginator.get_page(page_number)
     context = {
-        'designation': page,
+        'designation': designation_list,
     }
     return render(request, "Admin/view_designation.html", context)
 
@@ -379,15 +379,15 @@ def Admin_Attendance_View(request):
     admin_attendance = Attendance.objects.all().order_by('-id')
     
     # Pagination
-    items_per_page = 10
-    page_number = request.GET.get('page')
-    paginator = Paginator(admin_attendance, items_per_page)
-    page = paginator.get_page(page_number)
+    # items_per_page = 10
+    # page_number = request.GET.get('page')
+    # paginator = Paginator(admin_attendance, items_per_page)
+    # page = paginator.get_page(page_number)
 
     context = {
-        'admin_attendance': page,
+        'admin_attendance': admin_attendance,
     }
-    return render(request, 'Admin/attendance_view.html', context)
+    return render(request, 'Admin/attendance_view.html', context )
 
 from django.shortcuts import get_object_or_404
 
