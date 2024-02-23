@@ -16,6 +16,7 @@ from django.contrib.auth.decorators import login_required
 
 @login_required(login_url='/')
 @admin_required
+#Admin home page functionality
 def Home(request):
     employee_count = Employee.objects.all().count()
     designation_count = Designation.objects.all().count()
@@ -33,6 +34,7 @@ def Home(request):
     }
     return render(request, 'Admin/home.html',context)
 
+#Add Employee functionality
 @login_required(login_url='/')
 @admin_required
 def Add_Employee(request):
@@ -108,15 +110,13 @@ def Add_Employee(request):
         'form_data': form_data,
     }
     return render(request, "Admin/add_employee.html", context)
+
 #fetch all data in employee dashbord
 @login_required(login_url='/')
 @admin_required
 def View_Employee(request):
         employee_list = Employee.objects.all().order_by('-id')
-        # items_per_page = 10
-        # page_number = request.GET.get('page')
-        # paginator = Paginator(employee_list, items_per_page)
-        # page = paginator.get_page(page_number)
+ 
         context = {
             'employee': employee_list,
         }
@@ -198,7 +198,7 @@ def Update_Employee(request):
 
     return render(request, "Admin/edit_employee.html")
 
-
+#D
 def Delete_Employee(request,admin):
     employee =CustomUser.objects.get(id=admin)
     employee.delete()
@@ -217,15 +217,12 @@ def Add_Designation(request):
         messages.success(request, "Designation Are Successfully Created!!")
         return redirect('add_designationpage')
     return render(request, "Admin/add_designation.html")
-# ***********************************
+
 @login_required(login_url='/')
 @admin_required
 def View_Designation(request):
     designation_list = Designation.objects.all().order_by('-id')
-    # items_per_page = 10
-    # page_number = request.GET.get('page')
-    # paginator = Paginator(designation_list, items_per_page)
-    # page = paginator.get_page(page_number)
+
     context = {
         'designation': designation_list,
     }
@@ -376,14 +373,8 @@ def Employee_Disapprove_leave(request,id):
 @login_required(login_url='/')
 @admin_required
 def Admin_Attendance_View(request):
-    admin_attendance = Attendance.objects.all().order_by('-id')
-    
-    # Pagination
-    # items_per_page = 10
-    # page_number = request.GET.get('page')
-    # paginator = Paginator(admin_attendance, items_per_page)
-    # page = paginator.get_page(page_number)
-
+    admin_attendance = Attendance.objects.all().order_by('-id') # these line use for show all employee attendance in de
+ 
     context = {
         'admin_attendance': admin_attendance,
     }
@@ -432,20 +423,5 @@ def Edit_Attendance(request, id):
     
     return render(request, "Admin/edit_attendance.html", {'attendance': attendance})
 
-# def Update_Attendance(request):
-#     if request.method == "POST":
-#         attendance_id = request.POST.get('attendance_id')
-#         date = request.POST.get('date')
-#         login_time=request.POST.get('login_time')
-#         logout_time =request.POST.get('logout_time')
-#
-#         attendance = Attendance(
-#             id = attendance_id,
-#             login_time= login_time,
-#             logout_time = logout_time,
-#             date = date,
-#         )
-#         attendance.save()
-#         messages.success(request, "Record Has Been Successfully Updated")
-#         return redirect("attendance_view")
-#     return render(request,"Admin/edit_attendance.html")
+
+

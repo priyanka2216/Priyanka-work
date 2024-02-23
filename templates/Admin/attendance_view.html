@@ -4,21 +4,20 @@
 
   <div class="content container-fluid">
     <div class="page-header">
-      <div class="row align-items-center">
-        <div class="col">
-          <div class="col-12">
-            <div style="height: 40px;">
+      <div class="">
+        <div class="">
+          <div class="d-flex flex-wrap align-items-center justify-content-between">
+            <h3 class="page-title">Employee Attendance</h3>
+            <div>
                <ul style="margin: 0; padding: 0; list-style: none;">
                    <li style="display: inline;">
                        <a href="{% url 'Admin/homepage' %}" style="text-decoration: none; color: #007bff;">Dashboard</a>
                    </li>
                    <li style="display: inline; margin-left: 5px; margin-right: 5px; color: #868e96;">/</li>
-                   <li style="display: inline;  ">List Of Employee Attendance</li>
+                   <li style="display: inline;  ">Employee Attendance</li>
                </ul>
-           </div>
-
-          <h3 class="page-title text-center">List Of Employee Attendance</h3>
-        
+            </div>
+          </div>
           {% include 'includes/messages.html' %}
         </div>
       </div>
@@ -28,8 +27,8 @@
       <div class="col-sm-12">
         <div class="card card-table">
           <div class="card-body">
-            <div class="table-responsive">
-              <table id="table_id" class="table table-hover table-center mb-0 datatable">
+            <div class="">
+              <table id="table_id" class="table table-responsive table-responsive-1 table-hover table-center mb-0 datatable">
                 <thead>
                   <tr>
                     <th>Name</th>

@@ -2,9 +2,10 @@
 {% block content %}
 <div class="content container-fluid">
     <div class="page-header">
-        <div class="row align-items-center">
-            <div class="col">
-                <div style="height: 40px;">
+        <div>
+            <div class="d-flex flex-wrap align-items-center justify-content-between">
+                <h3 class="page-title" style="text-align: center;">List Of Employee</h3>
+                <div>
                     <ul style="margin: 0; padding: 0; list-style: none;">
                         <li style="display: inline;">
                             <a href="{% url 'Admin/homepage' %}" style="text-decoration: none; color: #007bff;">Dashboard</a>
@@ -13,23 +14,22 @@
                         <li style="display: inline; ">Employees Notification List</li>
                     </ul>
                 </div>
-                <h3 class="page-title" style="text-align: center;">List Of Employee</h3>
                 {% include 'includes/messages.html' %}
                 
             </div>
-            <div class="col-auto text-right float-right ml-auto">
+            <div class="my-4 d-flex justify-content-end">
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
                     View All Notification
                 </button>
             </div>
         </div>
     </div>
-    <div class="row">
+    <div class="row mt-5">
         <div class="col-sm-12">
-            <div class="card card-table">
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table id="table_id" class="table table-hover table-center mb-0 datatable">
+            <div class="card">
+                <div class="">
+                    <div class="card-body">
+                        <table id="table_id" class="table-responsive table-responsive-1 table table-hover table-center mb-0 datatable">
                             <thead>
                                 <tr>
                                     <th>ID</th>

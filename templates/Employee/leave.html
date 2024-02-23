@@ -2,31 +2,32 @@
 {% block content %}
 <div class="content container-fluid">
     <div class="page-header">
-        <div class="row align-items-center">
-            <div class="col">
+        <div class="">
+            <div class="d-flex flex-wrap align-items-center justify-content-between">
+                <h3 class="page-title" style="text-align: center;"> Leave Form</h3>
                 <ul class="breadcrumb" style="margin-top: 10px; padding: 8px; background-color: #ffffff;">
                     <li class="breadcrumb-item active"><a href="{% url 'employee/homepage' %}" style="text-decoration: none; color: #007bff;">Dashboard</a></li>
                     <li class="breadcrumb-item active">Apply for Leave</li>
                 </ul>
 
-                <h3 class="page-title" style="text-align: center;"> Leave Form</h3>
                
             </div>
-            <div class="col-auto text-right float-right ml-auto">
+            <div class="text-right">
                 <button class="btn btn-outline-primary mr-2" data-toggle="modal" data-target=".bd-example-modal-lg" type="button">Leave History</button>
             </div>
         </div>
     </div>
-    <div class="col-sm-9">
+    <div class="container-fluid mb-5">
         <div class="card">
-            <div class="card-body">
+            <div class="">
                 <form method="post" action="{% url 'employee_leave_save' %}">
                     {% csrf_token %}
-                    <div class="col-12">
-                        <h3 class="form-title my-3"><span>Apply For Leave</span></h3>
+                    <div class="admin-card-header card-header">
+                        <h3 class="admin-card-title my-3"><span>Apply For Leave</span></h3>
                     </div>
                     {% include 'includes/messages.html' %}
-                    <div class="col-12">
+                    <div class="card-body row">
+                    <div class="col-md-6">
                         <div class="form-group pmd-textfield pmd-textfield-floating-label">
                             <label for="leave_type">Leave Type</label>
                             <select id="leave_type" name="leave_type" class="form-control" title="Please select a Leave Type" required>
@@ -38,7 +39,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                         <div class="form-group pmd-textfield pmd-textfield-floating-label">
                             <label for="leave_date">Leave Date</label>
                             <input type="date" class="form-control" id="leave_date" name="leave_date" required>
@@ -50,9 +51,10 @@
                             <textarea id="message" class="form-control" name="message" style="height:150px" required></textarea>
                         </div>
                     </div>
-                    <div class="card-footer">
+                    <div class="col-12 text-center">
                         <button type="submit" class="btn btn-primary pmd-ripple-effect pmd-btn-raised" name="submit" value="Apply Leave">Apply Leave</button>
                     </div>
+                </div>
                 </form>
             </div>
         </div>

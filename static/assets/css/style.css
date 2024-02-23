@@ -842,8 +842,8 @@ button.bg-danger:hover {
 	font-size: 14px;
 }
 .card {
-    border: 1px solid #ececf5;
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.03);
+    border: 1px solid #eaeaff;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.5);
     margin-bottom: 1.875rem;
 }
 .card-body {
@@ -1700,7 +1700,7 @@ footer p {
 	transition: all 0.2s ease-in-out 0s;
 	display: inline-block;
 	margin-left: 10px;
-	white-space: nowrap;
+	white-space: wrap;
 }
 .sidebar .sidebar-menu > ul > li > a span.chat-user {
     margin-left: 0;
@@ -3461,5 +3461,27 @@ table.table-inbox tbody tr.checked {
 	.notifications .noti-content {
 		width: 310px;
 		height: 355px;
+	}
+}
+
+
+/* new css for ui fixes - added 23feb, 2024 */
+
+.admin-card-title {
+	font-size: 1.25rem;
+}
+.admin-card-header {
+	background-color: #f7f7fa !important;
+}
+.breadcrumb-link {
+	color: #868e96;
+}
+.table-responsive-1 {
+	display: inline-table !important;
+}
+
+@media only screen and (max-width: 1024px) {
+	.table-responsive-1 {
+		display: block !important;
 	}
 }

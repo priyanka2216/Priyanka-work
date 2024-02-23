@@ -1,46 +1,57 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<div class="col-sm-9">
-   <div class="card">
-      <div class="card-body">
+<div class="content container-fluid">
+   <div class="">
+      <div class="">
          <form method="post" action="{% url 'add_session' %}">
             {% csrf_token %}
-            <div class="col-12">
-               <div style="height: 40px;">
+            <div class="d-flex flex-wrap align-items-center justify-content-between">
+               
+               <h1 class=""><span>Add Session</span></h1>
+               <div>
                   <ul style="margin: 0; padding: 0; list-style: none;">
                       <li style="display: inline;">
                           <a href="{% url 'Admin/homepage' %}" style="text-decoration: none; color: #007bff;">Dashboard</a>
                       </li>
                       <li style="display: inline; margin-left: 5px; margin-right: 5px; color: #868e96;">/</li>
-                      <li style="display: inline; "><a href="{% url 'view_session' %}">View Session</a></li>
+                      <li style="display: inline; ">Add Session</li>
                   </ul>
               </div>
 
-               <h1 class="form-title my-3"><span>Add Session</span></h1>
 
             </div>
             {% include 'includes/messages.html' %}
-            <div class="col-sm-9">
-                <div class="form-group">
-                   <label> Session year Start</label>
-                   <div>
-                      <input type="date" class="form-control" name="session_year_start" pattern="\d{4}-\d{2}-\d{2}" required>
-                   </div>
-                </div>
+            <div class="card">
+               <div class="card-body">
+                  <div class="row">
+                     <div class="col-md-6">
+                        <div class="form-group">
+                           <label> Session year Start</label>
+                           <div>
+                              <input type="date" class="form-control" name="session_year_start" pattern="\d{4}-\d{2}-\d{2}" required>
+                           </div>
+                        </div>
+        
+                     </div>
+                     <div class="col-md-6">
+                        <div class="form-group">
+                           <label>Session year End</label>
+                           <div>
+                              <input type="date" class="form-control" name="session_year_end" pattern="\d{4}-\d{2}-\d{2}" required>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                
+                
 
-                <div class="form-group">
-                   <label>Session year End</label>
-                   <div>
-                      <input type="date" class="form-control" name="session_year_end" pattern="\d{4}-\d{2}-\d{2}" required>
-                   </div>
-                </div>
-
-            <div class="col-12">
+            <div class="text-center">
                <button type="submit" class="btn btn-primary">Add Session</button>
             </div>
 
          </form>
+      </div>
       </div>
    </div>
 </div>
