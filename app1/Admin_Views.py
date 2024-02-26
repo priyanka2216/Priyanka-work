@@ -40,76 +40,64 @@ def Home(request):
 def Add_Employee(request):
     designation_list = Designation.objects.all()
 
-    # Initialize form data with empty values
-    form_data = {
-        'first_name': '',
-        'last_name': '',
-        'email': '',
-        'username': '',
-        'password': '',
-        'address': '',
-        'designation_id': '',
-        'gender': '',
-    }
-
     if request.method == "POST":
         profile_pic = request.FILES.get('profile_pic')
-        form_data['first_name'] = request.POST.get('first_name')
-        form_data['last_name'] = request.POST.get('last_name')
-        form_data['email'] = request.POST.get('email')
-        form_data['username'] = request.POST.get('username')
-        form_data['password'] = request.POST.get('password')
-        form_data['address'] = request.POST.get('address')
-        form_data['designation_id'] = request.POST.get('designation_id')
-        form_data['gender'] = request.POST.get('gender')
-        print(form_data['designation_id'])
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        email = request.POST.get('email')
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        address = request.POST.get('address')
+        designation_id = request.POST.get('designation_id')
+        gender = request.POST.get('gender')
+        print(designation_id)
 
         # Validate email
         email_validator = EmailValidator(message="Enter a valid email address.")
         try:
-            email_validator(form_data['email'])
+            email_validator(email)
         except ValidationError as e:
             messages.warning(request, str(e))
 
         # Validate password
-        if len(form_data['password']) < 6:
+        if len(password) < 6:
             messages.warning(request, "Password must be at least 6 characters.")
 
-        if CustomUser.objects.filter(email=form_data['email']).exists():
+        if CustomUser.objects.filter(email=email).exists():
             messages.warning(request, "Email Is Already Taken")
 
-        if CustomUser.objects.filter(username=form_data['username']).exists():
+        if CustomUser.objects.filter(username=username).exists():
             messages.warning(request, "Username Is Already Taken")
 
         # If there are no validation issues, proceed with creating the user and employee
         if not messages.get_messages(request):
             user = CustomUser(
-                first_name=form_data['first_name'],
-                last_name=form_data['last_name'],
-                username=form_data['username'],
-                email=form_data['email'],
+                first_name=first_name,
+                last_name=last_name,
+                username=username,
+                email=email,
                 profile_pic=profile_pic,
                 user_type=2,
             )
-            user.set_password(form_data['password'])
+            user.set_password(password)
             user.save()
 
-            selected_designation = Designation.objects.get(id=form_data['designation_id'])
+            selected_designation = Designation.objects.get(id=designation_id)
 
             employee = Employee(
                 admin=user,
-                address=form_data['address'],
+                address=address,
                 designation_id=selected_designation,
-                gender=form_data['gender'],
+                gender=gender,
             )
             employee.save()
             messages.success(request, f"{user.first_name} {user.last_name} is successfully added!")
 
     context = {
         'designation_list': designation_list,
-        'form_data': form_data,
     }
     return render(request, "Admin/add_employee.html", context)
+   
 
 #fetch all data in employee dashbord
 @login_required(login_url='/')

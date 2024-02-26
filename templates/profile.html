@@ -42,6 +42,13 @@
                   <div class="form-group">
                      <label>Profile Image:</label>
                      <input type="file" class="form-control" name="profile_pic">
+                     <div class="avatar avatar-sm mt-2">
+                        {% if user.profile_pic %}
+                           <img src="/{{ user.profile_pic }}" alt="Profile Image" class="avatar-img rounded-circle">
+                        {% else %}
+                           <img src="{% static 'assets/img/images.jpg' %}" alt="Default Image" class="avatar-img rounded-circle">
+                        {% endif %}
+                     </div>
                   </div>
                </div>
                <div class="col-12 col-sm-6">

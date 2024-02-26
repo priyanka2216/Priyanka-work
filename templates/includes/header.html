@@ -6,7 +6,7 @@
               <img src="{% static 'assets/img/ams.jpg' %}" alt="Logo" style="width: 100px; height: 100px; font-weight: bold; margin-left: 40px;" >
                   <!-- <h4 class="my-2" style="font-size: 24px; font-weight: bold; font-family: 'Courier New', Courier, monospace; ">Employee Attendance Management System</h4> -->
                </a>
-               <a href="index.html" class="logo logo-small">
+               <a href="#" class="logo logo-small">
                <img src="{% static 'assets/img/logo-small.png' %}" alt="Logo" width="30" height="30" >
                </a>
             </div>
@@ -50,12 +50,12 @@
                   <div class="dropdown-menu">
                      <div class="user-header">
                         <div class="avatar avatar-sm">
-                           {% if user.profile_pic ==  "" %}
-                           <img src="{% static 'assets/img/no-image.jpg' %}" alt="" class="avatar-img rounded-circle">
+                           {% if user.profile_pic %}
+                               <img src="/{{ user.profile_pic }}" alt="" class="avatar-img rounded-circle">
                            {% else %}
-                           <img src="/{{user.profile_pic}}" alt="" class="avatar-img rounded-circle">
-                            {% endif %}
-                        </div>
+                               <img src="{% static 'assets/img/images.jpg' %}" alt="defult image" >
+                           {% endif %}
+                       </div>
                         <div class="user-text">
                            <h6>{{user.first_name}} {{user.last_name}}</h6>
                            {% if user.user_type == '1' %}

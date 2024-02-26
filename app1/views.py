@@ -77,6 +77,10 @@ def PROFILE(request):
     return render(request, 'profile.html', context)
 
 #Create function for fetch data in database
+from django.conf import settings
+from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
+
 def PROFILE_UPDATE(request):
     if request.method == "POST":
         try:
@@ -107,7 +111,13 @@ def PROFILE_UPDATE(request):
                 customuser.set_password(password)
 
             if profile_pic:
+                # Save the uploaded profile_pic
                 customuser.profile_pic = profile_pic
+            else:
+                # If no profile_pic is uploaded, use the default image
+                default_image_path = settings.STATIC_URL + 'assets/img/images.jpg'
+                with default_storage.open(default_image_path, 'rb') as default_image:
+                    customuser.profile_pic.save('images.jpg', ContentFile(default_image.read()))
 
             customuser.save()
             messages.success(request, "Your Profile Updated Successfully")
@@ -119,4 +129,5 @@ def PROFILE_UPDATE(request):
             messages.error(request, f"Error updating profile: {str(e)}")
 
     return render(request, 'profile.html')
+
 

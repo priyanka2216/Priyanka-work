@@ -74,11 +74,9 @@
                      <label>Designation:</label>
                      <select class="form-control" name="designation_id" required>
                         <option value="">Select Designation</option>
-                        {% for i in designation_list %}
-                        <option value="{{ i.id }}" {% if i.id == form_data.designation_id %} selected {% endif %}>{{
-                           i.name
-                           }}</option>
-                        {% endfor %}
+                         {% for i in designation_list %}
+                        <option value="{{ i.id }}" {% if i.id == form_data.designation_id %} selected {% endif %}>{{ i.name }}</option>
+                         {% endfor %}
                      </select>
                   </div>
                </div>
