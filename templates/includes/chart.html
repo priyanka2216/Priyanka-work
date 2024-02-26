@@ -7,25 +7,38 @@
 <script>
 
     $(document).ready(function() {
-    var options = {
-          series: [{{employee_count}}, {{designation_count}}, {{employee_leave_count}}],
-          chart: {
-          width: 450,
-          type: 'pie',
-        },
-        labels: ['Employee', 'Designation', 'Leave'],
-        responsive: [{
-          breakpoint: 480,
-          options: {
-            chart: {
-              width: 350
-            },
-            legend: {
-              position: 'bottom'
+        var options = {
+    series: [{{employee_count}}, {{designation_count}}, {{employee_leave_count}}],
+    chart: {
+        width: 450,
+        type: 'pie',
+    },
+    labels: ['Employee', 'Designation', 'Leave'],
+    responsive: [
+        {
+            breakpoint: 480,
+            options: {
+                chart: {
+                    width: 350
+                },
+                legend: {
+                    position: 'bottom'
+                }
             }
-          }
-        }]
-        };
+        },
+        {
+            breakpoint: 1025,
+            options: {
+                chart: {
+                    width: 420 // Adjust the width as needed
+                },
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }
+    ]
+};
 
         var chart = new ApexCharts(document.querySelector("#All_details"), options);
         chart.render();
