@@ -24,7 +24,7 @@ SECRET_KEY = 'django-insecure-1w_ri6qsxj@lmm=5y5b-sdhr&clhot9rxbyys_4r58khdz(wz%
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-ALLOWED_HOSTS = ['192.168.1.28']
+ALLOWED_HOSTS = ['34.174.165.208']
 
 # ALLOWED_HOSTS = ['ams.webinfinitesolutions.com','www.ams.webinfinitesolutions.com']
 
@@ -129,7 +129,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT = '/home/dh_985r5b/ams.webinfinitesolutions.com/public/static/'
+STATIC_ROOT = ''
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
