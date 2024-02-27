@@ -179,6 +179,7 @@ Version      : 1.0
 	// Small Sidebar
 
 	$(document).on('click', '#toggle_btn', function() {
+		console.log('clicked in toggle button')
 		if($('body').hasClass('mini-sidebar')) {
 			$('body').removeClass('mini-sidebar');
 			$('.subdrop + ul').slideDown();

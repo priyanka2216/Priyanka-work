@@ -27,9 +27,10 @@
       <div class="card">
         <div class="card-body">
           <div class="">
-            <table id="table_id" class="table table-hover table-center mb-0 datatable table-responsive">
+            <table id="table_id" class="table table-hover table-responsive table-cente mb-0">
+            <!-- <table id="table_id" class="table table-hover table-center mb-0 datatable table-responsive"> -->
               <thead>
-                <tr>
+                <tr> 
                   <th>ID</th>
                   <th>Name</th>
                   <th>Email</th>
@@ -57,10 +58,7 @@
                            <img src="{% static 'assets/img/images.jpg' %}" alt="Default Image" class="avatar-img rounded-circle">
                           </a>
                            {% endif %}
-                      <!-- <a href="#" class="avatar avatar-sm mr-2">
-                        <img class="avatar-img rounded-circle"
-                          src="/{{ i.admin.profile_pic }}">
-                      </a> -->
+                   
                       <a href="#">{{ i.admin.first_name }}&nbsp;{{ i.admin.last_name }}</a>
                     </h2>
                   </td>
@@ -91,20 +89,5 @@
       </div>
     </div>
   </div>
-
-  <!-- Display pagination controls -->
-  <!-- <div class="pagination">
-        <span class="step-links">
-            {% if employee.has_previous %}
-                <a href="?page=1">&laquo; first</a>
-                <a href="?page={{ employee.previous_page_number }}">previous</a>
-            {% endif %}
-            <span class="current-page">{{ employee.number }}</span>
-            {% if employee.has_next %}
-                <a href="?page={{ employee.next_page_number }}">next</a>
-                <a href="?page={{ employee.paginator.num_pages }}">last &raquo;</a>
-            {% endif %}
-        </span>
-    </div> -->
 </div>
 {% endblock %}
