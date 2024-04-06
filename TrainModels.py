@@ -1,6 +1,7 @@
 import pandas as pd
 from sklearn.svm import SVC
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.tree import DecisionTreeClassifier
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
@@ -39,13 +40,21 @@ rf_model = RandomForestClassifier(n_estimators=100, random_state=42)
 # Train Random Forest model
 rf_model.fit(X_train_scaled, y_train)
 
+# Initialize Decision Tree model
+dt_model = DecisionTreeClassifier(random_state=42)
+# Train Decision Tree model
+dt_model.fit(X_train_scaled, y_train)
+
 # Make predictions using the trained models
 y_pred_svm = svm_model.predict(X_test_scaled)
 y_pred_rf = rf_model.predict(X_test_scaled)
+y_pred_dt = dt_model.predict(X_test_scaled)
 
 # Evaluate model performance
 accuracy_svm = accuracy_score(y_test, y_pred_svm)
 accuracy_rf = accuracy_score(y_test, y_pred_rf)
+accuracy_dt = accuracy_score(y_test, y_pred_dt)
 
 print('SVM Accuracy:', accuracy_svm)
 print('Random Forest Accuracy:', accuracy_rf)
+print('Decision Tree Accuracy:', accuracy_dt)
