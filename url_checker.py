@@ -54,8 +54,14 @@ def preprocess_features(features):
 def check_url_for_phishing(url):
     features = extract_features(url)
     scaled_features = preprocess_features(features)
-    # Make predictions using SVM, Random Forest, and Decision Tree models
+    # Make predictions and probabilities using SVM, Random Forest, and Decision Tree models
     svm_prediction = svm_model.predict(scaled_features)[0]
     rf_prediction = rf_model.predict(scaled_features)[0]
     dt_prediction = dt_model.predict(scaled_features)[0]
-    return svm_prediction, rf_prediction, dt_prediction
+    
+    svm_proba = svm_model.predict_proba(scaled_features)[0] if hasattr(svm_model, 'predict_proba') else None
+    rf_proba = rf_model.predict_proba(scaled_features)[0] if hasattr(rf_model, 'predict_proba') else None
+    dt_proba = dt_model.predict_proba(scaled_features)[0] if hasattr(dt_model, 'predict_proba') else None
+    
+    return svm_prediction, rf_prediction, dt_prediction, svm_proba, rf_proba, dt_proba
+

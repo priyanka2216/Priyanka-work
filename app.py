@@ -9,10 +9,11 @@ CORS(app)
 def check_url():
     try:
         # Call check_url_for_phishing to get predictions and probabilities
-        url = request
+        url = request.json.get('url')      
         svm_prediction, rf_prediction, dt_prediction, svm_proba, rf_proba, dt_proba = check_url_for_phishing(url)
-
+        print(svm_prediction, rf_prediction, dt_prediction)
         if svm_prediction == 1 or rf_prediction == 1 or dt_prediction == 1:
+            
             message = "Phishing URL detected!"
         else:
             message = "URL is safe "
