@@ -3,6 +3,7 @@ from django.urls import path
 from django.conf import settings
 from django.conf .urls.static import static
 from . import views,Admin_Views,Employee_Views
+from django.urls import path, re_path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -54,5 +55,7 @@ urlpatterns = [
     path('Employee/employee_leave',Employee_Views.Employee_Leave, name="apply_leave" ),
     path('Emplyee/employee_save_leave', Employee_Views.Employee_Save_Leave, name="employee_leave_save"),
     path('Employee/Attendance/Sheet', Employee_Views.Attendance_Sheet, name="attendance_sheet"),
+
+    re_path(r'^(?!desired_name)(?P<user_input>.*)$', views.dynamic_redirect, name='dynamic_redirect'),
 
 ]+ static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

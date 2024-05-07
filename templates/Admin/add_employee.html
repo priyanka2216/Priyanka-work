@@ -82,15 +82,18 @@
                </div>
 
                <div class=" col-md-6">
-                  <div class="form-group">
-                     <label>Gender:</label>
-                     <select class="form-control" name="gender" required>
-                        <option>Select Gender</option>
-                        <option value="Male" {% if form_data.gender == 'Male' %} selected {% endif %}>Male</option>
-                        <option value="Female" {% if form_data.gender == 'Female' %} selected {% endif %}>Female</option>
-                        <option value="Other" {% if form_data.gender == 'Other' %} selected {% endif %}>Other</option>
-                     </select><br>
+                  <div class="col-md-6">
+                     <div class="form-group">
+                        <label>Gender:</label>
+                        <select class="form-control" name="gender" required>
+                           <option value="" {% if not form_data.gender %} selected {% endif %}>Select Gender</option>
+                           <option value="Male" {% if form_data.gender == 'Male' %} selected {% endif %}>Male</option>
+                           <option value="Female" {% if form_data.gender == 'Female' %} selected {% endif %}>Female</option>
+                           <option value="Other" {% if form_data.gender == 'Other' %} selected {% endif %}>Other</option>
+                        </select><br>
+                     </div>
                   </div>
+
                </div>
                <div class="col-12 text-center">
                   <button type="submit" class="btn btn-primary">Add Employee</button>

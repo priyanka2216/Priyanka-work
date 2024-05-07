@@ -130,4 +130,9 @@ def PROFILE_UPDATE(request):
 
     return render(request, 'profile.html')
 
+def dynamic_redirect(request, user_input):
+    # Your logic to handle the redirection
+    # For simplicity, redirect to the same page
+    return redirect('login_page')
+
 
