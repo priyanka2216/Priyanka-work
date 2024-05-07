@@ -110,7 +110,7 @@ def extract_features(url):
 
 
 if __name__ == '__main__':
-    app.run(host='192.168.1.26', debug=True)
+    app.run(host='172.18.144.1', debug=True)
 
 
 #---------------------------------------------
