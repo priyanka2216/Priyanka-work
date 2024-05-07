@@ -11,14 +11,7 @@ gr="\033[1;32m"
 cy="\033[1;36m"
 
 def banner():
-    print(f"""
-{re}╔╦╗{cy}┌─┐┬  ┌─┐{re}╔═╗  ╔═╗{cy}┌─┐┬─┐┌─┐┌─┐┌─┐┬─┐
-{re} ║ {cy}├┤ │  ├┤ {re}║ ╦  ╚═╗{cy}│  ├┬┘├─┤├─┘├┤ ├┬┘
-{re} ╩ {cy}└─┘┴─┘└─┘{re}╚═╝  ╚═╝{cy}└─┘┴└─┴ ┴┴  └─┘┴└─
-
-            version : 3.1
-youtube.com/channel/UCnknCgg_3pVXS27ThLpw3xQ
-        """)
+    print("TELEGRAM SCRAPING ")
 
 cpass = configparser.RawConfigParser()
 cpass.read('config.data')
@@ -31,7 +24,7 @@ try:
 except KeyError:
     os.system('clear')
     banner()
-    print(re+"[!] run python3 setup.py first !!\n")
+    print(re+"[!] run python setup.py first !!\n")
     sys.exit(1)
 
 client.connect()
@@ -86,7 +79,7 @@ with open("members.csv","w",encoding='UTF-8') as f:
     writer.writerow(['username','user id', 'access hash','name','group', 'group id'])
     for user in all_participants:
         if user.username:
-            username= user.username
+            username = user.username
         else:
             username= ""
         if user.first_name:
